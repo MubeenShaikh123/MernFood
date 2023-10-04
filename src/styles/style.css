@@ -1,0 +1,288 @@
+@import url(./partials/variables.css);
+@import url(./partials/global.css);
+@import url(./fonts.css);
+
+/* ======Start Style navbar======  */
+
+body::-webkit-scrollbar{
+    width: 0;
+}
+
+.header .navbar-brand {
+    padding: .8rem;
+}
+
+.header .container-fluid .navbar-collapse ul li {
+    background: var(--gradient-color);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* ======End Style navbar======  */
+
+/* ==========Start login style========== */
+.centered-login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    position: relative;
+    background: url('../images//bg-images/bg/lily-banse--YHSwy6uqvk-unsplash.jpg');
+    background-size: cover;
+}
+
+.loginform {
+    backdrop-filter: blur(17px) brightness(1.5);
+    /* box-shadow:0 0 10px rgba(255,255,255,0.5); */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    width: 100%;
+    max-width: 500px;
+    min-height: 300px;
+    position: relative;
+    z-index: 1;
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+}
+
+
+.loginform .page-buttons button {
+    padding: .5rem 1.2rem;
+    background-color: transparent;
+    border: none;
+    position: relative;
+    font-weight: bold;
+    color: var(--form-text-color);
+    text-shadow: 0px 0px 10px rgba(255, 255, 255, 1);
+}
+
+.loginform .page-buttons .active::before {
+    content: '';
+    width: 80%;
+    height: 2px;
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 10%;
+    background: linear-gradient(to right, transparent 0%, lightgray 20%, lightgray 80%, transparent 100%);
+}
+
+.loginform .form .button-group {
+    padding: 20px 30px 10px 30px;
+}
+
+.loginform .form {
+    width: 100%;
+    position: relative;
+    padding: 2rem 1rem 0.5rem 1rem;
+}
+
+.loginform .form .input-group .input-text {
+    font-size: 14px;
+    font-weight: bold;
+    outline: none;
+    color: var(--form-text-color);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    background: transparent;
+    border-radius: 50px !important;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    padding: 11px 45px 11px 20px;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.loginform .form .input-group .input-text::placeholder {
+    color: var(--form-text-color);
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.loginform .form .button-group .primary-button {
+    font-size: 14px;
+    outline: none;
+    color: white;
+    border-radius: 50px;
+    border: 1px solid transparent;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    padding: 11px 45px 11px 20px;
+    background-color: var(--form-text-color);
+    width: 100%;
+    margin: 10px auto;
+
+}
+
+.icon {
+    position: absolute;
+    top: 12px;
+    right: 25px;
+    color: var(--form-text-color);
+}
+
+
+/* CSS for Modal */
+.modal-parent {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1;
+}
+
+.modal-parent::-webkit-scrollbar{
+    width: 0;
+}
+
+.modal-parent .modal-content {
+    width: 80%;
+    max-height: 80vh;
+    overflow: auto;
+    margin: auto;
+    margin-top: 4rem;
+    display: block;
+    background-color: white;
+    color: black;
+    padding: 20px;
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+}
+
+.modal-parent .modal-content::-webkit-scrollbar{
+    width: 0;
+}
+
+.modal-parent .modal-content .close-button {
+    position: absolute;
+    left: 100%;
+    top: 0;
+    transform: translateX(-100%);
+    border: none;
+    background: transparent;
+}
+
+.cartTable {
+    border-collapse: separate;
+    /* border-spacing: 10px; */
+    table-layout: fixed;
+    width: 100%;
+    text-align: center;
+}
+
+.cartTable tr th {
+    border-bottom: 2px solid black;
+}
+
+.cartTable tr td {
+    /* border-bottom: 1px solid black; */
+    /* white-space: nowrap; */
+    overflow: hidden;
+}
+
+.cartTable tr td .closeButton {
+    border: 1px solid transparent;
+    background-color: transparent;
+}
+
+/* .cartTable tr td .closeButton:hover{
+} */
+
+
+.cartTable tr:first-child th:first-child,
+.cartTable tr:first-child th:last-child {
+    width: 10%;
+}
+
+.cartTable tr:first-child th:nth-child(2) {
+    width: 40%;
+}
+
+.cartTable tr:first-child th:nth-child(3) {
+    width: 20%;
+}
+
+.cartTable tr:first-child th:nth-child(4) {
+    width: 20%;
+}
+
+.cartTable tr:first-child th:nth-child(5) {
+    width: 20%;
+}
+
+.modal-parent .modal-content .tableDiv {
+    width: 100%;
+    padding: .1rem;
+    display: inline-block;
+}
+
+.modal-parent .modal-content .tableDiv .cartDiv {
+    /* background-color: yellow; */
+    border: 1px solid transparent;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    padding: .5rem;
+    position: relative;
+}
+
+.modal-parent .modal-content .tableDiv .cartDiv span:nth-child(odd) {
+    width: 70%;
+    display: inline-block;
+}
+
+.modal-parent .modal-content .tableDiv .cartDiv span:nth-child(even) {
+    width: 30%;
+    display: inline-block;
+}
+
+.modal-parent .modal-content .tableDiv .cartDiv .closeButton {
+    border: none;
+    background-color: transparent;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+.myCarousel{
+    width: 100%;
+    height: 500px;
+    margin-bottom: 10px;
+  }
+  
+.myCarousel .carousel{
+    height: 100%;
+    width: 100%;
+}
+
+.myCarousel .carousel .carousel-inner{
+    height: 100%;
+    width: 100%;
+}
+
+.carousel-inner .carousel-item{
+    height: 100%;
+    width: 100%;
+}
+
+.carousel-inner .carousel-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    object-position: center;
+  }
+
+/* .myCarousel .carousel .carousel-item img{
+    object-fit: cover;
+    object-position: center;
+} */
+
+
+/* ==========End login style========== */
+
+/* ==========Start Footer style========== */
+
+
+
+/* ==========End Footer style========== */

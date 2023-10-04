@@ -1,0 +1,10 @@
+#logo{
+    width: 30px;
+    height: 30px;
+    border-radius: 5px;
+}
+
+#card_img{
+    max-height: 170px;
+    object-fit: cover;
+}

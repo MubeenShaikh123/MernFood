@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const storeSlice = createSlice({
     name: 'Store',
     initialState: {
+        email:'',
         isLoggedIn: false,
         searchText: '',
         items: []
@@ -34,9 +35,12 @@ const storeSlice = createSlice({
         },
         logoutSuccess: (state, action) => {
             state.isLoggedIn = false
+        },
+        setEmail:(state,action)=>{
+            state.email=action.payload
         }
     }
 })
 
-export const { addItemToCart, removeItemFromCart, search, loginFailure, loginSuccess, registerFailure, registerSuccess, logoutSuccess } = storeSlice.actions
+export const { addItemToCart, removeItemFromCart, search, loginFailure, loginSuccess, registerFailure, registerSuccess, logoutSuccess,setEmail } = storeSlice.actions
 export default storeSlice.reducer;

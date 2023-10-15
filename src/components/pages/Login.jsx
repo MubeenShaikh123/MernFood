@@ -8,6 +8,8 @@ export default function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
+  const [icon, setIcon] = useState(' fa fa-lock fa-lg')
+  const [type, setType] = useState('password')
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -17,17 +19,30 @@ export default function Login() {
     const login = dispatch(userLogin(user))
     login
       .then((data) => {
-        console.log('data', data)
         navigate('/')
       })
       .catch((error) => {
-        console.log(error.error)
         setError(error.error[0])
-        })
+      })
   }
+
+  const handleToggle = () => {
+    if (type === 'password') {
+      setIcon(' fa fa-solid fa-unlock ')
+      setType('text')
+    } else {
+      setIcon(' fa fa-lock fa-lg');
+      setType('password')
+    }
+  }
+
 
   const loginData = {
     error, setEmail, setPassword, handleSubmit
+  }
+
+  const showPass = {
+    icon, type, handleToggle
   }
 
   return (
@@ -41,7 +56,7 @@ export default function Login() {
             <button>Register</button>
           </Link>
         </div>
-        <LoginForm loginData={loginData} />
+        <LoginForm loginData={{ loginData, showPass }} />
       </div>
     </div>
   )

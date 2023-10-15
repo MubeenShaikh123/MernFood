@@ -33,17 +33,19 @@ body::-webkit-scrollbar{
 }
 
 .loginform {
-    backdrop-filter: blur(17px) brightness(1.5);
+    backdrop-filter: blur(20px) brightness(1.5);
     /* box-shadow:0 0 10px rgba(255,255,255,0.5); */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     width: 100%;
     max-width: 500px;
     min-height: 300px;
-    position: relative;
+    position: absolute;
+    align-items: center;
     z-index: 1;
     background: transparent;
     border: 2px solid rgba(255, 255, 255, 0.2);
     border-radius: 10px;
+
 }
 
 
@@ -105,7 +107,7 @@ body::-webkit-scrollbar{
     border-radius: 50px;
     border: 1px solid transparent;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    padding: 11px 45px 11px 20px;
+    padding: 11px 20px;
     background-color: var(--form-text-color);
     width: 100%;
     margin: 10px auto;
@@ -119,6 +121,28 @@ body::-webkit-scrollbar{
     color: var(--form-text-color);
 }
 
+/* Forgot Password Styling*/
+
+.otpComponent{
+    padding: 0rem 0rem .5rem 0rem;
+}
+
+.optInput{
+    font-size: 14px;
+    font-weight: bold;
+    outline: none;
+    color: var(--form-text-color);
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    background: transparent;
+    border-radius: 50% !important;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    padding: 11px 20px 11px 20px;
+    width: 60px;
+    height: 60px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+/* End Forgot Password Styling */
 
 /* CSS for Modal */
 .modal-parent {

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { addItemToCart, removeItemFromCart } from '../../../redux/reducer'
+import { addItemToCart} from '../../../redux/reducer'
 
 export default function Card(props) {
 
@@ -35,7 +35,7 @@ export default function Card(props) {
                                 })
                             }
                         </select>
-                        <span>Total : </span>
+                        <span className='ps-4'>Total : </span>
                         <span>{finalPrice}</span>
                     </div>
                     <div>
@@ -71,7 +71,6 @@ export default function Card(props) {
                                         finalPrice
                                     }))
                             }
-                            console.log(items)
                         }} className='btn btn-primary mt-2' >
                             Add To Cart
                         </button>

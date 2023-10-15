@@ -1,0 +1,28 @@
+import React from 'react'
+
+export default function ChangePass(props) {
+  const {changePassErr,setPassword,setConfirmPassword,handleChangePassword} = props.data
+  return (
+    <div>
+      <form method='post' className='form' onSubmit={handleChangePassword}>
+        <div className="form-group input-group ">
+          <input type="text" className='input-text' onChange={(e) => { setPassword(e.target.value) }} placeholder='New Password' />
+          <i className="icon fa fa-lock fa-lg"></i>
+        </div>
+        <div className="form-group text-danger fw-bold text-center mb-1 ">
+          {
+            changePassErr ? changePassErr.message : ''
+          }
+        </div>
+        <div className="form-group input-group ">
+          <input type="text" className='input-text' onChange={(e) => { setConfirmPassword(e.target.value) }} placeholder='Confirm New Password' />
+          <i className="icon fa fa-lock fa-lg"></i>
+        </div>
+        <div className="button-group form-group">
+          <button className='btn primary-button'>Change Password</button>
+        </div>
+      </form>
+    </div>
+  )
+}
+// $2a$10$O69LT7rtrwXiSEbYJgLcIOIfCwmruNt0HoG.tPdmts4/tXbjjaMm2

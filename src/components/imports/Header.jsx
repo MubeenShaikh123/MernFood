@@ -25,7 +25,7 @@ export default function Header() {
                 isLoggedIn?<NavLoggedIn/>:<NavLoggedOut/>
               }
             </ul>
-            <div className="d-flex d-lg-none " role="search">
+            <div className="d-flex d-sm-none " role="search">
               <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" 
               onChange={(e)=>{
                 const temp=e.target.value;

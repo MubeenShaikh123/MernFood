@@ -1,5 +1,5 @@
 import * as Authservice from '../axiosServices/axios'
-import { loginFailure, loginSuccess, registerFailure, registerSuccess, logoutSuccess } from './reducer'
+import { loginFailure, loginSuccess, registerFailure, registerSuccess, logoutSuccess, setEmail } from './reducer'
 
 export const userLogin = (userCredentials) => async (dispatch) => {
     return Authservice.login(userCredentials)
@@ -30,3 +30,45 @@ export const userlogout = () => (dispatch) => {
     dispatch(logoutSuccess(msg))
     Promise.resolve(msg)
 }
+
+export const sendOtp=(userMail)=>(dispatch)=>{
+    return Authservice.sendOtp(userMail)
+    .then((data)=>{
+        dispatch(setEmail(data))
+        return Promise.resolve(data)
+    })
+    .catch((error)=>{
+        return Promise.reject(error)
+    })
+}
+
+export const sendOtpUnregistered = (userMail) => (dispatch) => {
+    return Authservice.sendOtpUnregistered(userMail) 
+      .then((data) => {
+        return Promise.resolve(data);
+      })
+      .catch((error) => {
+        return Promise.reject(error);
+      });
+  };
+  
+
+export const verifyOtp = (verificationData) => (dispatch) => {
+    return Authservice.verifyOtp(verificationData)
+      .then((data) => {
+        return Promise.resolve(data);
+      })
+      .catch((error) => {
+        return Promise.reject(error);
+      });
+  };  
+
+  export const changePassword = (userPasswords) => (dispatch) => {
+    return Authservice.changePassword(userPasswords)
+      .then((data) => {
+        return Promise.resolve(data);
+      })
+      .catch((error) => {
+        return Promise.reject(error);
+      });
+  };

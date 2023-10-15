@@ -10,6 +10,14 @@ export default function Footer() {
                         <img className='rounded ms-3 ' id='logo' src={require('../../images/logo.jpg')} alt="Logo" />
                     </Link>
                     <span className="mb-3 mb-md-0 text-muted">© 2023 Company, Inc</span>
+                    <span className='position-absolute' style={{
+                        position: 'absolute',
+                        left: '50%',
+                        transform: 'translateX(-50%)',
+                    }}>
+                        <i class="fa fa-brands fa-instagram fa-lg p-1 ps-2 pe-2"></i>
+                        <i class="fa text-black  fa-brands fa-facebook p-1 ps-2 pe-2"></i>
+                    </span>
                 </div>
             </footer>
         </div>

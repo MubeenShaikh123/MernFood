@@ -1,7 +1,8 @@
 import React from 'react'
 
 export default function RegisterForm(props) {
-  const {error,setName,setLocation,setEmail,setPassword,handleSubmit}=props.registerData
+  const {error,setName,setLocation,setEmail,setPassword,handleSubmit}=props.registerData.registerData
+  const {icon, type, handleToggle}=props.registerData.showPass
   return (
     <div>
       <form method='post' className='form' onSubmit={handleSubmit}>
@@ -15,7 +16,7 @@ export default function RegisterForm(props) {
           }
         </div>
         <div className="form-group input-group ">
-          <input type="text" className='input-text' onChange={(e)=>{setEmail(e.target.value)}} placeholder='Email Address' />
+          <input type="text" className='input-text' onChange={(e)=>{setEmail(e.target.value.toLowerCase())}} placeholder='Email Address' />
           <i className="icon fa fa-regular fa-envelope fa-md"></i>
         </div>
         <div className="form-group text-danger fw-bold text-center mb-1 ">
@@ -24,8 +25,8 @@ export default function RegisterForm(props) {
           }
         </div>
         <div className="form-group input-group ">
-          <input type="text" className='input-text' onChange={(e)=>{setPassword(e.target.value)}} placeholder='Password' />
-          <i className="icon fa fa-lock fa-lg"></i>
+          <input type={type} className='input-text' onChange={(e)=>{setPassword(e.target.value)}} placeholder='Password' />
+          <i className={`icon ${icon}`} onClick={handleToggle}></i>
         </div>
         <div className="form-group text-danger fw-bold text-center mb-1 ">
           {

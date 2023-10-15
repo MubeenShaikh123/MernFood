@@ -42,8 +42,13 @@ export default function Carousel() {
           <span className="visually-hidden">Next</span>
         </button>
       </div>
-      <div className="carousel-caption d-none d-lg-block mb-3 ">
-        <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search"
+      <div className="carousel-caption d-none d-sm-block ">
+        <input className="form-control me-2" style={{
+    position: 'absolute',
+    bottom: '1rem',
+    left: '50%',
+    transform: 'translateX(-50%)',
+  }} type="search" placeholder="Search" aria-label="Search"
           onChange={(e) => {
             const temp = e.target.value;
             dispatch(search(temp))

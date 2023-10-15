@@ -4,7 +4,7 @@ import Login from './components/pages/Login';
 import Register from './components/pages/Register';
 import Home from './components/pages/Home';
 import Cart from './components/imports/Cart';
-import ForgotPass from './components/imports/ForgotPass';
+import ForgotPass from './components/imports/ForgotPassword/ForgotPass';
 
 function App() {
   return (

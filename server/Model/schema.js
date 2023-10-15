@@ -23,5 +23,27 @@ const userSchema=new mongoose.Schema({
     }
 
 })
+const otpSchema=new mongoose.Schema({
+    email:{
+        type:String,
+        required:true,
+    },
+    otp:{
+        type:String,
+        required:true
+    },
+    used:{
+        type:Boolean,
+        required:true,
+        default:false
+    },
+    date:{
+        type:Date,
+        default:Date.now()
+    }
+})
 
-module.exports=mongoose.model("user",userSchema)
+const User = mongoose.model("User", userSchema);
+const Otp = mongoose.model("Otp", otpSchema);
+
+module.exports = { User, Otp };

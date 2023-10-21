@@ -161,7 +161,7 @@ exports.sendOtp = async (req, res) => {
     },
   });
   const mailOptions = {
-    from: 'AppName@gmail.com',
+    from: 'MernFood@gmail.com',
     to: userMail,
     subject: 'OTP for your account',
     text: `Your OTP is: ${otp}`,
@@ -258,13 +258,13 @@ exports.sendOtpUnregistered = async (req, res) => {
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: 'mubeenshaikh5029@gmail.com',
-      pass: 'fgts okvo bshf kphf',
+      user: process.env.EMAIL,
+      pass: process.env.PASS,
     },
   });
 
   const mailOptions = {
-    from: 'AppName@gmail.com',
+    from: 'MernFood@gmail.com',
     to: userMail,
     subject: 'OTP for your account',
     text: `Your OTP is: ${otp}`,

@@ -8,3 +8,11 @@
     max-height: 170px;
     object-fit: cover;
 }
+
+.insta-logo,.facebook-logo{
+    cursor: pointer;
+}
+
+.insta-logo:hover,.facebook-logo:hover{
+    text-shadow: 1px 1px 10px rgba(0, 0, 0, 1);
+}

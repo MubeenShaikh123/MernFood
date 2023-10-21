@@ -15,8 +15,12 @@ export default function Footer() {
                         left: '50%',
                         transform: 'translateX(-50%)',
                     }}>
-                        <i class="fa fa-brands fa-instagram fa-lg p-1 ps-2 pe-2"></i>
-                        <i class="fa text-black  fa-brands fa-facebook p-1 ps-2 pe-2"></i>
+                        <a href="https://instagram.com/__mubeen_shaikh?igshid=OGQ5ZDc2ODk2ZA==0" target='_blank' rel='noreferrer'>
+                        <i class="fa fa-brands fa-instagram fa-lg p-1 ps-2 pe-2 insta-logo"></i>
+                        </a>
+                        <a href="https://www.facebook.com/profile.php?id=100048574524041&mibextid=ZbWKwL" target='_blank' rel='noreferrer'>
+                        <i class="fa text-black  fa-brands fa-facebook p-1 ps-2 pe-2 facebook-logo"></i>
+                        </a>
                     </span>
                 </div>
             </footer>

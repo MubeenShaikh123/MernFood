@@ -34,7 +34,6 @@ export const sendOtp=(userMail)=>{
         return Promise.resolve(response.data)
     })
     .catch((error)=>{
-      console.log(error)
         return Promise.reject(error.response.data)
     })
 }

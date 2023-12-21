@@ -156,12 +156,12 @@ exports.sendOtp = async (req, res) => {
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: 'mubeenshaikh5029@gmail.com',
+      user: 'abc@gmail.com',
       pass: 'fgts okvo bshf kphf',
     },
   });
   const mailOptions = {
-    from: 'MernFood@gmail.com',
+    from: 'abc@gmail.com',
     to: userMail,
     subject: 'OTP for your account',
     text: `Your OTP is: ${otp}`,
@@ -419,9 +419,6 @@ console.log("confirmPassword",confirmPassword)
 
 
 
-// =================================================================================
-// =================================================================================
-// fgts okvo bshf kphf
 // =================================================================================
 // =================================================================================
 

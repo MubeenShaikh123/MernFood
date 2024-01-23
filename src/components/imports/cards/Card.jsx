@@ -1,17 +1,56 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { addItemToCart} from '../../../redux/reducer'
+import { addMenuItem, removeMenuItem } from '../../../redux/actions'
 
 export default function Card(props) {
 
+    const username = useSelector((state) => state.cart.email) || "MiyaBhai"
     const { img, name, description } = props.cardData
-    const dispach = useDispatch()
+    const dispatch = useDispatch()
     const items = useSelector((state) => state.cart.items)
     const [qty, setQty] = useState(1)
     let options = props.cardData.options[0]
     let priseOption = Object.keys(options)
     const [size, setSize] = useState(priseOption[0])
     let finalPrice = qty * parseInt(options[size])
+    const handleAddToCart = () => {
+
+        const itemIndex = items.findIndex(
+            (item) => item.name === name
+        );
+
+        if (itemIndex !== -1) {
+            const removeItem = dispatch(removeMenuItem(name))
+            removeItem
+                .then((data) => {
+                    console.log("Cart Data Removed Successfully")
+                })
+                .catch((error) => {
+                    console.log("Cart Data Removing Failed")
+                })
+        }
+
+        const data = {
+            username,
+            cartData: [
+                {
+                    name,
+                    qty,
+                    size,
+                    finalPrice
+                }
+            ]
+        }
+
+        const addMenuItems = dispatch(addMenuItem(data))
+        addMenuItems
+            .then((data) => {
+                console.log("Cart Data Added Successfully")
+            })
+            .catch((error) => {
+                console.log("Cart Data Addiing Failed")
+            })
+    }
 
     return (
         <div>
@@ -39,39 +78,7 @@ export default function Card(props) {
                         <span>{finalPrice}</span>
                     </div>
                     <div>
-                        <button onClick={() => {
-                            const itemIndex = items.findIndex(item => (item.name === name) && (item.size === size));
-                            if (itemIndex !== -1) {
-                                // if (items[itemIndex.qty] !== qty) {
-                                //     let tempId = items[itemIndex]
-                                //     console.log('itemIndex : ',itemIndex)
-                                //     console.log('tempID : ',tempId)
-                                //     console.log('itemsi : ',tempId)
-
-                                //     dispach(removeItemFromCart(itemIndex))
-                                //     let length = items.length
-                                //     dispach(addItemToCart(
-                                //         {
-                                //             id: ++length,
-                                //             name,
-                                //             qty,
-                                //             size,
-                                //             finalPrice
-                                //         }))
-                                // }
-                            }
-                            else {
-                                let length = items.length
-                                dispach(addItemToCart(
-                                    {
-                                        id: ++length,
-                                        name,
-                                        qty,
-                                        size,
-                                        finalPrice
-                                    }))
-                            }
-                        }} className='btn btn-primary mt-2' >
+                        <button onClick={() => { handleAddToCart(name) }} className='btn btn-primary mt-2' >
                             Add To Cart
                         </button>
                     </div>

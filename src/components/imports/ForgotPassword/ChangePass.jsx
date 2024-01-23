@@ -1,7 +1,7 @@
 import React from 'react'
 
 export default function ChangePass(props) {
-  const {changePassErr,setPassword,setConfirmPassword,handleChangePassword} = props.data
+  const { changePassErr, setPassword, setConfirmPassword, handleChangePassword } = props.data
   return (
     <div>
       <form method='post' className='form' onSubmit={handleChangePassword}>
@@ -25,4 +25,3 @@ export default function ChangePass(props) {
     </div>
   )
 }
-// $2a$10$O69LT7rtrwXiSEbYJgLcIOIfCwmruNt0HoG.tPdmts4/tXbjjaMm2

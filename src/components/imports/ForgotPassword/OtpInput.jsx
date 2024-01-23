@@ -12,7 +12,6 @@ const OtpInput = ({ numInputs, setOtp }) => {
     const updatedOtp = [...tempOtp];
     updatedOtp[index] = e.target.value;
     setTempOtp(updatedOtp);
-    // pass otp to parent
     setOtp(String(updatedOtp.join('')))
 
     // focus to the next input
@@ -23,7 +22,6 @@ const OtpInput = ({ numInputs, setOtp }) => {
 
   const handleInputKeyDown = (e, index) => {
     if (e.key === 'Backspace' && index > 0 && !tempOtp[index]) {
-      // If Backspace is pressed, it's not the first input, and the current input is empty, focus on the previous input
       document.getElementById(`tempOtp-input-${index - 1}`).focus();
     }
   }

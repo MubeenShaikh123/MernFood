@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 export default function LoginForm(props) {
   const { error, setEmail, setPassword, handleSubmit } = props.loginData.loginData
-  const {icon,type,handleToggle}=props.loginData.showPass
+  const { icon, type, handleToggle } = props.loginData.showPass
   return (
     <div>
       <form method='post' className='form' onSubmit={handleSubmit}>

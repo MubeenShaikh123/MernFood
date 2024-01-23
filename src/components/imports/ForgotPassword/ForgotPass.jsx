@@ -29,7 +29,6 @@ export default function ForgotPass(props) {
         setIsOtpSent(true)
       })
       .catch((error) => {
-        console.log("sendotp error",error)
         setOtpErr(error.error[0])
       })
   }
@@ -51,7 +50,7 @@ export default function ForgotPass(props) {
 
   const handleChangePassword = (event) => {
     event.preventDefault();
-  
+
     const validatePassword = () => {
       return new Promise((resolve, reject) => {
         if (password === confirmPassword && password.length > 7) {
@@ -63,20 +62,16 @@ export default function ForgotPass(props) {
         }
       });
     };
-  
+
     validatePassword()
       .then(() => {
         // Password and confirmPassword match, dispatch changePassword action
         return dispatch(changePassword({ email, password, confirmPassword }));
       })
       .then((data) => {
-        // You can also redirect the user to another page
-        console.log('Password changed successfully', data);
         navigate('/login')
       })
       .catch((error) => {
-        console.log("error", error);
-        console.log("changepasserr : ", changePassErr);
         setChangePassErr({ message: error });
       });
   };

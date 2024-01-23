@@ -1,15 +1,28 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
-import { removeItemFromCart } from '../../redux/reducer';
+import { removeMenuItem } from '../../redux/actions';
 
 function Cart() {
   const items = useSelector((state) => state.cart.items)
+  const username = useSelector((state) => state.cart.email) || "Mubeen"
   const dispatch = useDispatch()
-  const handleDelete = (id) => {
-    dispatch(removeItemFromCart(id))
+  const handleDelete = (name) => {
+    const data = {
+      username,
+      name
+    }
+    const removeItem = dispatch(removeMenuItem(data))
+    removeItem
+      .then((data) => {
+        console.log("Cart Data Removed Successfully")
+      })
+      .catch((error) => {
+        console.log("Cart Data Removing Failed")
+      })
   }
   return (
     <>
+      console.log("cart rendered")
       <div className='d-none d-sm-table'>
         <tr className='tr'>
           <th>#</th>
@@ -21,12 +34,12 @@ function Cart() {
         </tr>
         {items.map((item, index) => (
           <tr className='tr' key={index}>
-            <td>{item.id}</td>
+            <td>{index + 1}</td>
             <td>{item.name}</td>
             <td>{item.qty}</td>
             <td>{item.size}</td>
             <td>&#8377;{item.finalPrice}</td>
-            <td><button className='closeButton' onClick={()=>handleDelete(item.id)}><i class="fa fa-solid fa-trash fa-lg"></i></button></td>
+            <td><button className='closeButton' onClick={() => handleDelete(item.name)}><i class="fa fa-solid fa-trash fa-lg"></i></button></td>
           </tr>
         ))}
       </div>
@@ -37,7 +50,7 @@ function Cart() {
             <span>{item.qty}</span>
             <span>{item.size}</span>
             <span>&#8377;{item.finalPrice}</span>
-            <button className='closeButton' onClick={()=>handleDelete(item.id)}><i class="fa fa-solid fa-trash"></i></button>
+            <button className='closeButton' onClick={() => handleDelete(item.name)}><i class="fa fa-solid fa-trash"></i></button>
           </div>
         ))}
       </div>

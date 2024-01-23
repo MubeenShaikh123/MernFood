@@ -1,16 +1,14 @@
 const { validationResult } = require('express-validator');
-const { User, Otp } = require('../Model/schema');
+const { User, Otp, Menu } = require('../Model/schema');
 const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { default: mongoose } = require('mongoose');
 const nodemailer = require('nodemailer');
 
-exports.register = async (req, res) => { // Use register instead of registery
+exports.register = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     const errorResponse = [];
-
-    // Customize responses based on specific error messages
     errors.array().forEach(error => {
       switch (error.msg) {
         case 'Name must be at least 4 characters long':
@@ -22,7 +20,6 @@ exports.register = async (req, res) => { // Use register instead of registery
         case 'Password must be at least 8 characters long':
           errorResponse.push({ field: 'password', message: 'Password is too short' });
           break;
-        // Add more cases for other validation messages as needed
         default:
           errorResponse.push({ field: 'unknown', message: 'Unknown validation error' });
           break;
@@ -64,7 +61,6 @@ exports.register = async (req, res) => { // Use register instead of registery
     res.status(500).json({ error: [{ message: err.message || "Error in login" }] });
   }
 }
-
 
 exports.login = async (req, res) => {
   const { email, password } = req.body
@@ -128,29 +124,40 @@ exports.fooditem = async (req, res) => {
   }
 }
 
-// ===========================send Otp====================
+exports.storedata = async (req, res) => {
+  try {
+    const { username } = req.query;
+    const collection = mongoose.connection.collection('menus')
+
+    const data = await collection.find({username}).toArray()
+    return res.json(data)
+  }
+  catch (error) {
+    res.status(500).json({ error: 'Server error' });
+  }
+}
 
 exports.sendOtp = async (req, res) => {
   const errors = validationResult(req);
-  
+
   if (!errors.isEmpty()) {
     const errorResponse = [];
-    
+
     errors.array().forEach((error) => {
       switch (error.msg) {
         case "Invalid Email Format":
           errorResponse.push({ field: "email", message: "Invalid Email Format" });
           break;
-          default:
-            errorResponse.push({ field: "unknown", message: "Unknown validation error" });
-          }
+        default:
+          errorResponse.push({ field: "unknown", message: "Unknown validation error" });
+      }
     });
 
     return res.status(400).json({ error: errorResponse });
   }
-  
+
   const userMail = req.body.email;
-  console.log("userMail",userMail)
+  console.log("userMail", userMail)
   const otp = String(Math.floor(Math.random() * 9000) + 1000);
 
   const transporter = nodemailer.createTransport({
@@ -223,7 +230,7 @@ exports.sendOtp = async (req, res) => {
     })
     .catch((error) => {
       console.log("catch start")
-      console.log("error",error)
+      console.log("error", error)
       if (error === 'User not found') {
         res.status(404).json({ error: [{ message: 'User not found' }] });
       } else {
@@ -231,8 +238,6 @@ exports.sendOtp = async (req, res) => {
       }
     });
 };
-
-// ====================================send Otp to unregistered users ============================
 
 exports.sendOtpUnregistered = async (req, res) => {
   const errors = validationResult(req);
@@ -309,8 +314,6 @@ exports.sendOtpUnregistered = async (req, res) => {
     });
 };
 
-// ====================================verify Otp============================
-
 exports.verifyOtp = async (req, res) => {
 
   const errors = validationResult(req);
@@ -359,9 +362,9 @@ exports.verifyOtp = async (req, res) => {
 
 exports.changePassword = async (req, res) => {
   const { email, password, confirmPassword } = req.body;
-console.log("email",email)
-console.log("password",password)
-console.log("confirmPassword",confirmPassword)
+  console.log("email", email)
+  console.log("password", password)
+  console.log("confirmPassword", confirmPassword)
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     const errorResponse = [];
@@ -395,7 +398,6 @@ console.log("confirmPassword",confirmPassword)
       if (!user) {
         return Promise.reject('User not found');
       }
-      // Hash the new passwordconst hashpass = await bcryptjs.hashSync(password)
       return (hashpass);
     })
     .then((hashedPassword) => {
@@ -417,11 +419,95 @@ console.log("confirmPassword",confirmPassword)
 
 }
 
+exports.addMenu = async (req, res) => {
+  if (!req.body || !req.body.username || !req.body.cartData || !Array.isArray(req.body.cartData)) {
+    return res.status(400).json({ error: [{ message: 'Invalid request format' }] });
+  }
 
+  const { username, cartData } = req.body;
 
-// =================================================================================
-// =================================================================================
-// fgts okvo bshf kphf
-// =================================================================================
-// =================================================================================
+  try {
+    // Check if the user already has a menu
+    let existingMenu = await Menu.findOne({ username });
 
+    if (existingMenu) {
+      // Iterate over existing cartData
+      existingMenu.cartData.forEach((existingItem, index) => {
+        // Find an object with similar name in the existing cartData
+        const matchingIndex = cartData.findIndex(newItem => newItem.name === existingItem.name);
+
+        if (matchingIndex !== -1) {
+          // Remove the existing item with the same name
+          existingMenu.cartData.splice(index, 1);
+        }
+      });
+
+      // Push the new cartData to the existing menu's cartData array
+      existingMenu.cartData.push(...cartData);
+
+      // Save the updated menu to the database
+      existingMenu.save()
+        .then(updatedMenu => {
+          res.json(updatedMenu);
+        })
+        .catch(error => {
+          res.status(500).json({ error: [{ message: error.message || 'Error updating menu data' }] });
+        });
+    } else {
+      console.log("username", username);
+      console.log("password", cartData);
+
+      // Create a new menu with the provided data
+      const newMenu = new Menu({
+        username,
+        cartData
+      });
+
+      // Save the menu to the database
+      newMenu.save()
+        .then(savedMenu => {
+          res.json(savedMenu);
+        })
+        .catch(error => {
+          res.status(500).json({ error: [{ message: error.message || 'Error saving menu data' }] });
+        });
+    }
+  } catch (err) {
+    res.status(500).json({ error: [{ message: err.message || 'Internal Server Error' }] });
+  }
+};
+
+exports.removeMenu = async (req, res) => {
+  if (!req.body || !req.body.username || !req.body.name) {
+    return res.status(400).json({ error: [{ message: 'Invalid request format' }] });
+  }
+
+  const { username, name } = req.body;
+
+  try {
+    // Find the menu for the specified user
+    const existingMenu = await Menu.findOne({ username });
+
+    if (existingMenu) {
+      // Remove items with the specified name from cartData
+      existingMenu.updateOne({ $pull: { cartData: { name } } })
+        .then((result) => {
+          console.log(result);
+          if (result.modifiedCount > 0) {
+            // If any item was removed, return the updated menu
+            res.json(existingMenu);
+          } else {
+            // Else, return no matching item was found
+            res.json({ message: 'No item with the specified name found in the cartData' });
+          }
+        })
+        .catch((error) => {
+          res.status(500).json({ error: [{ message: error.message || 'Error updating menu data' }] });
+        });
+    } else {
+      res.status(404).json({ error: [{ message: 'Menu not found for the specified user' }] });
+    }
+  } catch (err) {
+    res.status(500).json({ error: [{ message: err.message || 'Internal Server Error' }] });
+  }
+};

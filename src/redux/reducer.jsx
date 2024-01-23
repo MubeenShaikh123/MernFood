@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const storeSlice = createSlice({
     name: 'Store',
     initialState: {
-        email:'',
+        email: '',
         isLoggedIn: false,
         searchText: '',
         items: []
@@ -13,10 +13,14 @@ const storeSlice = createSlice({
             state.searchText = action.payload
         },
         addItemToCart: (state, action) => {
+            const itemToBeRemoved = state.items.findIndex(item => item.name === action.payload.name)
+            if (itemToBeRemoved !== -1) {
+                state.items.splice(itemToBeRemoved, 1)
+            }
             state.items.push(action.payload)
         },
         removeItemFromCart: (state, action) => {
-            const itemToBeRemoved = state.items.findIndex(item => item.id === action.payload)
+            const itemToBeRemoved = state.items.findIndex(item => item.name === action.payload)
             if (itemToBeRemoved !== -1) {
                 state.items.splice(itemToBeRemoved, 1)
             }
@@ -36,11 +40,11 @@ const storeSlice = createSlice({
         logoutSuccess: (state, action) => {
             state.isLoggedIn = false
         },
-        setEmail:(state,action)=>{
-            state.email=action.payload
+        setEmail: (state, action) => {
+            state.email = action.payload
         }
     }
 })
 
-export const { addItemToCart, removeItemFromCart, search, loginFailure, loginSuccess, registerFailure, registerSuccess, logoutSuccess,setEmail } = storeSlice.actions
+export const { addItemToCart, removeItemFromCart, search, loginFailure, loginSuccess, registerFailure, registerSuccess, logoutSuccess, setEmail } = storeSlice.actions
 export default storeSlice.reducer;

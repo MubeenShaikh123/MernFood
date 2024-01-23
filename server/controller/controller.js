@@ -1,5 +1,5 @@
 const { validationResult } = require('express-validator');
-const { User, Otp, Menu } = require('../Model/schema');
+const { User, Otp } = require('../Model/schema');
 const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { default: mongoose } = require('mongoose');
@@ -163,12 +163,12 @@ exports.sendOtp = async (req, res) => {
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: 'mubeenshaikh5029@gmail.com',
+      user: 'abc@gmail.com',
       pass: 'fgts okvo bshf kphf',
     },
   });
   const mailOptions = {
-    from: 'MernFood@gmail.com',
+    from: 'abc@gmail.com',
     to: userMail,
     subject: 'OTP for your account',
     text: `Your OTP is: ${otp}`,
@@ -178,25 +178,20 @@ exports.sendOtp = async (req, res) => {
   // Check if a user with the provided email exists in the database
   User.findOne({ email: userMail })
     .then((existingUser) => {
-      console.log("0th then start")
       if (existingUser) {
-        console.log("0th then if")
         // User exists, continue with OTP operations
         return Otp.findOne({ email: userMail });
       } else {
-        console.log("0th then else")
         // User does not exist, return an error
         return Promise.reject('User not found');
       }
     })
     .then((existingOtp) => {
-      console.log("first then start")
       if (existingOtp) {
         // OTP exists, update it
         existingOtp.otp = otp;
         existingOtp.used = false;
         existingOtp.date = new Date();
-        console.log("first then if")
         return existingOtp.save();
       } else {
         // OTP does not exist, create a new record
@@ -205,32 +200,27 @@ exports.sendOtp = async (req, res) => {
           otp: otp,
           used: false,
         });
-        console.log("first then else")
         return newOtp.save();
       }
     })
     .then(() => {
       // Send the email
-      console.log("second then start")
       return new Promise((resolve, reject) => {
         transporter.sendMail(mailOptions, (error, info) => {
           if (error) {
-            console.log("second then if")
             reject(error);
           } else {
-            console.log("second then else")
             resolve(info);
           }
         });
       });
     })
     .then((info) => {
-      console.log("third then start")
       res.json({ message: 'OTP Sent Successfully' });
     })
     .catch((error) => {
       console.log("catch start")
-      console.log("error", error)
+      console.log("error",error)
       if (error === 'User not found') {
         res.status(404).json({ error: [{ message: 'User not found' }] });
       } else {
@@ -362,9 +352,9 @@ exports.verifyOtp = async (req, res) => {
 
 exports.changePassword = async (req, res) => {
   const { email, password, confirmPassword } = req.body;
-  console.log("email", email)
-  console.log("password", password)
-  console.log("confirmPassword", confirmPassword)
+console.log("email",email)
+console.log("password",password)
+console.log("confirmPassword",confirmPassword)
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     const errorResponse = [];
@@ -419,95 +409,11 @@ exports.changePassword = async (req, res) => {
 
 }
 
-exports.addMenu = async (req, res) => {
-  if (!req.body || !req.body.username || !req.body.cartData || !Array.isArray(req.body.cartData)) {
-    return res.status(400).json({ error: [{ message: 'Invalid request format' }] });
-  }
 
-  const { username, cartData } = req.body;
 
-  try {
-    // Check if the user already has a menu
-    let existingMenu = await Menu.findOne({ username });
+// =================================================================================
+// =================================================================================
+// fgts okvo bshf kphf
+// =================================================================================
+// =================================================================================
 
-    if (existingMenu) {
-      // Iterate over existing cartData
-      existingMenu.cartData.forEach((existingItem, index) => {
-        // Find an object with similar name in the existing cartData
-        const matchingIndex = cartData.findIndex(newItem => newItem.name === existingItem.name);
-
-        if (matchingIndex !== -1) {
-          // Remove the existing item with the same name
-          existingMenu.cartData.splice(index, 1);
-        }
-      });
-
-      // Push the new cartData to the existing menu's cartData array
-      existingMenu.cartData.push(...cartData);
-
-      // Save the updated menu to the database
-      existingMenu.save()
-        .then(updatedMenu => {
-          res.json(updatedMenu);
-        })
-        .catch(error => {
-          res.status(500).json({ error: [{ message: error.message || 'Error updating menu data' }] });
-        });
-    } else {
-      console.log("username", username);
-      console.log("password", cartData);
-
-      // Create a new menu with the provided data
-      const newMenu = new Menu({
-        username,
-        cartData
-      });
-
-      // Save the menu to the database
-      newMenu.save()
-        .then(savedMenu => {
-          res.json(savedMenu);
-        })
-        .catch(error => {
-          res.status(500).json({ error: [{ message: error.message || 'Error saving menu data' }] });
-        });
-    }
-  } catch (err) {
-    res.status(500).json({ error: [{ message: err.message || 'Internal Server Error' }] });
-  }
-};
-
-exports.removeMenu = async (req, res) => {
-  if (!req.body || !req.body.username || !req.body.name) {
-    return res.status(400).json({ error: [{ message: 'Invalid request format' }] });
-  }
-
-  const { username, name } = req.body;
-
-  try {
-    // Find the menu for the specified user
-    const existingMenu = await Menu.findOne({ username });
-
-    if (existingMenu) {
-      // Remove items with the specified name from cartData
-      existingMenu.updateOne({ $pull: { cartData: { name } } })
-        .then((result) => {
-          console.log(result);
-          if (result.modifiedCount > 0) {
-            // If any item was removed, return the updated menu
-            res.json(existingMenu);
-          } else {
-            // Else, return no matching item was found
-            res.json({ message: 'No item with the specified name found in the cartData' });
-          }
-        })
-        .catch((error) => {
-          res.status(500).json({ error: [{ message: error.message || 'Error updating menu data' }] });
-        });
-    } else {
-      res.status(404).json({ error: [{ message: 'Menu not found for the specified user' }] });
-    }
-  } catch (err) {
-    res.status(500).json({ error: [{ message: err.message || 'Internal Server Error' }] });
-  }
-};

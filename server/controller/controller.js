@@ -129,7 +129,7 @@ exports.storedata = async (req, res) => {
     const { username } = req.query;
     const collection = mongoose.connection.collection('menus')
 
-    const data = await collection.find({username}).toArray()
+    const data = await collection.find({ username }).toArray()
     return res.json(data)
   }
   catch (error) {

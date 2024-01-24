@@ -152,7 +152,6 @@ exports.sendOtp = async (req, res) => {
           errorResponse.push({ field: "unknown", message: "Unknown validation error" });
       }
     });
-
     return res.status(400).json({ error: errorResponse });
   }
 

@@ -1,5 +1,5 @@
 const { validationResult } = require('express-validator');
-const { User, Otp } = require('../Model/schema');
+const { User, Otp, Menu } = require('../Model/schema');
 const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { default: mongoose } = require('mongoose');
@@ -437,9 +437,6 @@ exports.addMenu = async (req, res) => {
           res.status(500).json({ error: [{ message: error.message || 'Error updating menu data' }] });
         });
     } else {
-      console.log("username", username);
-      console.log("password", cartData);
-
       // Create a new menu with the provided data
       const newMenu = new Menu({
         username,

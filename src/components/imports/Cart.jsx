@@ -4,7 +4,7 @@ import { removeMenuItem } from '../../redux/actions';
 
 function Cart() {
   const items = useSelector((state) => state.cart.items)
-  const username = useSelector((state) => state.cart.email) || "Mubeen"
+  const username = useSelector((state) => state.cart.email) || "MiyaBhai"
   const dispatch = useDispatch()
   const handleDelete = (name) => {
     const data = {
@@ -22,7 +22,6 @@ function Cart() {
   }
   return (
     <>
-      console.log("cart rendered")
       <div className='d-none d-sm-table'>
         <tr className='tr'>
           <th>#</th>

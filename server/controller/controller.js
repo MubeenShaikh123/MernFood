@@ -157,7 +157,6 @@ exports.sendOtp = async (req, res) => {
   }
 
   const userMail = req.body.email;
-  console.log("userMail", userMail)
   const otp = String(Math.floor(Math.random() * 9000) + 1000);
 
   const transporter = nodemailer.createTransport({
@@ -178,25 +177,20 @@ exports.sendOtp = async (req, res) => {
   // Check if a user with the provided email exists in the database
   User.findOne({ email: userMail })
     .then((existingUser) => {
-      console.log("0th then start")
       if (existingUser) {
-        console.log("0th then if")
         // User exists, continue with OTP operations
         return Otp.findOne({ email: userMail });
       } else {
-        console.log("0th then else")
         // User does not exist, return an error
         return Promise.reject('User not found');
       }
     })
     .then((existingOtp) => {
-      console.log("first then start")
       if (existingOtp) {
         // OTP exists, update it
         existingOtp.otp = otp;
         existingOtp.used = false;
         existingOtp.date = new Date();
-        console.log("first then if")
         return existingOtp.save();
       } else {
         // OTP does not exist, create a new record
@@ -205,32 +199,25 @@ exports.sendOtp = async (req, res) => {
           otp: otp,
           used: false,
         });
-        console.log("first then else")
         return newOtp.save();
       }
     })
     .then(() => {
       // Send the email
-      console.log("second then start")
       return new Promise((resolve, reject) => {
         transporter.sendMail(mailOptions, (error, info) => {
           if (error) {
-            console.log("second then if")
             reject(error);
           } else {
-            console.log("second then else")
             resolve(info);
           }
         });
       });
     })
     .then((info) => {
-      console.log("third then start")
       res.json({ message: 'OTP Sent Successfully' });
     })
     .catch((error) => {
-      console.log("catch start")
-      console.log("error", error)
       if (error === 'User not found') {
         res.status(404).json({ error: [{ message: 'User not found' }] });
       } else {
@@ -362,9 +349,6 @@ exports.verifyOtp = async (req, res) => {
 
 exports.changePassword = async (req, res) => {
   const { email, password, confirmPassword } = req.body;
-  console.log("email", email)
-  console.log("password", password)
-  console.log("confirmPassword", confirmPassword)
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     const errorResponse = [];
@@ -492,7 +476,6 @@ exports.removeMenu = async (req, res) => {
       // Remove items with the specified name from cartData
       existingMenu.updateOne({ $pull: { cartData: { name } } })
         .then((result) => {
-          console.log(result);
           if (result.modifiedCount > 0) {
             // If any item was removed, return the updated menu
             res.json(existingMenu);

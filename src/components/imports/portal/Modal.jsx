@@ -1,10 +1,26 @@
 import React from 'react'
 import ReactDOM from 'react-dom';
 import Cart from '../Cart'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { checkoutAction } from '../../../redux/actions';
 
 export default function Modal({ onClose }) {
   const items = useSelector((state) => state.cart.items)
+  const username = useSelector((state) => state.cart.email)||"MiyaBhai"
+  const dispatch=useDispatch()
+  const user={username}
+  const onCheckout=()=>{
+    console.log("model",user)
+    const check = dispatch(checkoutAction(user))
+    check
+      .then((data) => {
+        console.log("Checkout Successful")
+      })
+      .catch((error) => {
+        console.log("Checkout Failed")
+      })
+  }
+
   return ReactDOM.createPortal(
     <div className="modal-parent">
       <div className="modal-content">
@@ -18,6 +34,7 @@ export default function Modal({ onClose }) {
           <div className="tableDiv d-sm-none">
             <Cart></Cart>
           </div>
+          <button className='checkout-button btn btn-success ' onClick={onCheckout}>Checkout</button>
           </>
           }
 

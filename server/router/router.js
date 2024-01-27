@@ -48,5 +48,6 @@ router.post('/removemenu', [
   body('name').notEmpty().withMessage('Name is required'),
 ], controller.removeMenu);
 
+router.delete('/checkout/:username', controller.checkout);
 
 module.exports = router;

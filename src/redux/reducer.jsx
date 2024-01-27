@@ -42,9 +42,12 @@ const storeSlice = createSlice({
         },
         setEmail: (state, action) => {
             state.email = action.payload
+        },
+        checkoutSuccess: (state, action) => {
+            state.items = [];
         }
     }
 })
 
-export const { addItemToCart, removeItemFromCart, search, loginFailure, loginSuccess, registerFailure, registerSuccess, logoutSuccess, setEmail } = storeSlice.actions
+export const { addItemToCart, removeItemFromCart, search, loginFailure, loginSuccess, registerFailure, registerSuccess, logoutSuccess, setEmail, checkoutSuccess } = storeSlice.actions
 export default storeSlice.reducer;

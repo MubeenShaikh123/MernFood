@@ -188,9 +188,16 @@ body::-webkit-scrollbar{
     background: transparent;
 }
 
+.modal-parent .modal-content .checkout-button {
+    position: relative;
+    left: calc(100% - 7px);
+    bottom: -7px;
+    transform: translateX(-100%);
+    text-transform: uppercase;
+}
+
 .cartTable {
     border-collapse: separate;
-    /* border-spacing: 10px; */
     table-layout: fixed;
     width: 100%;
     text-align: center;

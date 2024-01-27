@@ -89,3 +89,13 @@ export const removeMenu = (menuData) => {
       return Promise.reject(error.response.data)
     })
 }
+
+export const checkout = (checkoutData) => {
+  return axios.delete(`${baseUrl}/checkout/${checkoutData.username}`)
+  .then(response => {
+    console.log('Response:', response.data);
+  })
+  .catch(error => {
+    console.error('Error:', error.response.data);
+  });
+}

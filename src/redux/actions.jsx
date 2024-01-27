@@ -1,5 +1,5 @@
 import * as Authservice from '../axiosServices/axios'
-import { loginFailure, loginSuccess, registerFailure, registerSuccess, logoutSuccess, setEmail, addItemToCart, removeItemFromCart } from './reducer'
+import { loginFailure, loginSuccess, registerFailure, registerSuccess, logoutSuccess, setEmail, addItemToCart, removeItemFromCart,checkoutSuccess } from './reducer'
 
 export const userLogin = (userCredentials) => async (dispatch) => {
   return Authservice.login(userCredentials)
@@ -88,6 +88,17 @@ export const removeMenuItem = (menuData) => async (dispatch) => {
   return Authservice.removeMenu(menuData)
     .then((data) => {
       dispatch(removeItemFromCart(menuData.name))
+      return Promise.resolve(data)
+    })
+    .catch((error) => {
+      return Promise.reject(error)
+    })
+}
+
+export const checkoutAction = (menuData) => async (dispatch) => {
+  return Authservice.checkout(menuData)
+    .then((data) => {
+      dispatch(checkoutSuccess())
       return Promise.resolve(data)
     })
     .catch((error) => {

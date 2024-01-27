@@ -490,3 +490,17 @@ exports.removeMenu = async (req, res) => {
     res.status(500).json({ error: [{ message: err.message || 'Internal Server Error' }] });
   }
 };
+
+exports.checkout = async (req, res) => {
+  const { username } = req.params;
+  try {
+    const deleteResult = await Menu.deleteOne({ username });
+    if (deleteResult.deletedCount > 0) {
+      return res.json({ message: 'Checkout successful' });
+    } else {
+      return res.status(404).json({ error: [{ message: 'Menu not found for the specified user' }] });
+    }
+  } catch (err) {
+    return res.status(500).json({ error: [{ message: err.message || 'Internal Server Error' }] });
+  }
+};

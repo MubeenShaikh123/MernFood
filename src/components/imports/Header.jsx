@@ -22,7 +22,7 @@ export default function Header() {
                 <Link className="nav-link active" aria-current="page" to='#'>Home</Link>
               </li>
               {
-                !isLoggedIn ? <NavLoggedIn /> : <NavLoggedOut />
+                isLoggedIn ? <NavLoggedIn /> : <NavLoggedOut />
               }
             </ul>
             <div className="d-flex d-sm-none " role="search">

@@ -39,7 +39,7 @@ export default function RegisterForm(props) {
         </div>
         <div className="form-group text-danger fw-bold  text-center ">
           {
-            (error.field === "unknown" || !error.field) ? error.message : ''
+            (error.field === "unknown" || error.field === "location" || !error.field) ? error.message : ''
           }
         </div>
         <div className="button-group form-group">

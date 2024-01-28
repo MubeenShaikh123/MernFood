@@ -25,7 +25,10 @@ router.post('/sendOtp', [
 ], controller.sendOtp)
 
 router.post('/sendOtpUnregistered', [
-  body('email').isEmail().withMessage("Invalid Email Format")
+  body('name').isLength({ min: 4 }).withMessage('Name must be at least 4 characters long'),
+  body('email').isEmail().withMessage('Invalid email format'),
+  body('password').isLength({ min: 8 }).withMessage('Password must be at least 8 characters long'),
+  body('location').isLength({ min: 1 }).withMessage('Add valid location')
 ], controller.sendOtpUnregistered);
 
 router.post('/verifyOtp', [

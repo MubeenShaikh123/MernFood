@@ -23,6 +23,8 @@ export default function ForgotPass(props) {
     if (event) {
       event.preventDefault();
     }
+    setOtpErr([])
+    setVerifyErr([])
     const Otp = dispatch(sendOtp({ email }))
     Otp
       .then((data) => {
@@ -35,6 +37,7 @@ export default function ForgotPass(props) {
 
   const handleVerifyOtp = (event) => {
     event.preventDefault();
+    setVerifyErr([])
     dispatch(verifyOtp({ email, otp }))
       .then((data) => {
         setIsOtpVerified(true)
@@ -50,6 +53,7 @@ export default function ForgotPass(props) {
 
   const handleChangePassword = (event) => {
     event.preventDefault();
+    setChangePassErr([])
 
     const validatePassword = () => {
       return new Promise((resolve, reject) => {

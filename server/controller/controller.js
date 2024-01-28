@@ -25,7 +25,6 @@ exports.register = async (req, res) => {
           break;
       }
     });
-
     return res.status(400).json({ error: errorResponse });
   }
 
@@ -39,7 +38,7 @@ exports.register = async (req, res) => {
     const existingUser = await User.findOne({ email: req.body.email })
 
     if (existingUser) {
-      return res.status(409).json({ error: [{ message: "User with given email already exist" }] })
+      return res.status(409).json({ error: [{ field: 'name', message: "User with given email already exist" }] })
     }
     const hashpass = await bcryptjs.hashSync(password)
     const newUser = new User({
@@ -55,10 +54,10 @@ exports.register = async (req, res) => {
         res.json({ email: register.email, name: register.name });
       })
       .catch(error => {
-        res.status(406).json({ error: [{ message: error.message || "Something Went Wong In Mongodb" }] });
+        res.status(406).json({ error: [{ message: error.message || "Something Went Wong In Database" }] });
       });
   } catch (err) {
-    res.status(500).json({ error: [{ message: err.message || "Error in login" }] });
+    res.status(500).json({ error: [{ message: err.message || "Error in register" }] });
   }
 }
 
@@ -87,12 +86,12 @@ exports.login = async (req, res) => {
   const document = await User.findOne({ email: email });
 
   if (!document) {
-    return res.status(401).json({ error: [{ message: "Invalid email" }] });
+    return res.status(401).json({ error: [{ field: "email", message: "Invalid email" }] });
   }
 
   const isMatch = await bcryptjs.compare(password, document.password)
   if (!isMatch) {
-    return res.status(400).json({ error: [{ message: 'Incorrect password' }] })
+    return res.status(400).json({ error: [{ field: "password", message: 'Incorrect password' }] })
   }
   const token = jwt.sign({ id: document._id }, process.env.JWT)
   const name = document.name
@@ -139,10 +138,9 @@ exports.storedata = async (req, res) => {
 
 exports.sendOtp = async (req, res) => {
   const errors = validationResult(req);
-
   if (!errors.isEmpty()) {
     const errorResponse = [];
-
+    
     errors.array().forEach((error) => {
       switch (error.msg) {
         case "Invalid Email Format":
@@ -161,8 +159,8 @@ exports.sendOtp = async (req, res) => {
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: 'abc@gmail.com',
-      pass: 'fgts okvo bshf kphf',
+      user: process.env.EMAIL,
+      pass: process.env.PASS,
     },
   });
   const mailOptions = {
@@ -175,23 +173,23 @@ exports.sendOtp = async (req, res) => {
 
   // Check if a user with the provided email exists in the database
   User.findOne({ email: userMail })
-    .then((existingUser) => {
-      if (existingUser) {
-        // User exists, continue with OTP operations
-        return Otp.findOne({ email: userMail });
-      } else {
-        // User does not exist, return an error
-        return Promise.reject('User not found');
-      }
-    })
-    .then((existingOtp) => {
-      if (existingOtp) {
-        // OTP exists, update it
-        existingOtp.otp = otp;
-        existingOtp.used = false;
-        existingOtp.date = new Date();
-        return existingOtp.save();
-      } else {
+  .then((existingUser) => {
+    if (existingUser) {
+      // User exists, continue with OTP operations
+      return Otp.findOne({ email: userMail });
+    } else {
+      // User does not exist, return an error
+      return Promise.reject('User not found');
+    }
+  })
+  .then((existingOtp) => {
+    if (existingOtp) {
+      // OTP exists, update it
+      existingOtp.otp = otp;
+      existingOtp.used = false;
+      existingOtp.date = new Date();
+      return existingOtp.save();
+    } else {
         // OTP does not exist, create a new record
         const newOtp = new Otp({
           email: userMail,
@@ -227,23 +225,29 @@ exports.sendOtp = async (req, res) => {
 
 exports.sendOtpUnregistered = async (req, res) => {
   const errors = validationResult(req);
-
   if (!errors.isEmpty()) {
     const errorResponse = [];
-
-    errors.array().forEach((error) => {
+    errors.array().forEach(error => {
       switch (error.msg) {
-        case "Invalid Email Format":
-          errorResponse.push({ field: "email", message: "Invalid Email Format" });
+        case 'Name must be at least 4 characters long':
+          errorResponse.push({ field: 'name', message: 'Username is too short' });
+          break;
+        case 'Invalid email format':
+          errorResponse.push({ field: 'email', message: 'Invalid email format' });
+          break;
+        case 'Password must be at least 8 characters long':
+          errorResponse.push({ field: 'password', message: 'Password is too short' });
+          break;
+        case 'Add valid location':
+          errorResponse.push({ field: 'location', message: 'Location required' });
           break;
         default:
-          errorResponse.push({ field: "unknown", message: "Unknown validation error" });
+          errorResponse.push({ field: 'unknown', message: 'Unknown validation error' });
+          break;
       }
     });
-
     return res.status(400).json({ error: errorResponse });
   }
-
   const userMail = req.body.email;
   const otp = String(Math.floor(Math.random() * 9000) + 1000);
   const transporter = nodemailer.createTransport({
@@ -253,7 +257,6 @@ exports.sendOtpUnregistered = async (req, res) => {
       pass: process.env.PASS,
     },
   });
-
   const mailOptions = {
     from: 'MernFood@gmail.com',
     to: userMail,
@@ -318,7 +321,6 @@ exports.verifyOtp = async (req, res) => {
           errorResponse.push({ field: 'unknown', message: 'Unknown validation error' });
       }
     });
-
     return res.status(400).json({ error: errorResponse });
   }
 
@@ -326,6 +328,7 @@ exports.verifyOtp = async (req, res) => {
   Otp.findOne({ email })
     .then((otpDocument) => {
       if (otpDocument && !otpDocument.used && otpDocument.date >= new Date(Date.now() - 5 * 60 * 1000) && otpDocument.otp === otp) {
+        // if (otpDocument && otpDocument.otp === otp) {
         // OTP is valid, mark it as used
         otpDocument.used = true;
         return otpDocument.save();

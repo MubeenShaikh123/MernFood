@@ -67,7 +67,7 @@ body::-webkit-scrollbar{
     position: absolute;
     bottom: 0;
     left: 10%;
-    background: linear-gradient(to right, transparent 0%, lightgray 20%, lightgray 80%, transparent 100%);
+    background: linear-gradient(to right, transparent 0%, #36454F 20%, #36454F 80%, transparent 100%);
 }
 
 .loginform .form .button-group {

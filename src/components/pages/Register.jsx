@@ -23,22 +23,23 @@ export default function Register() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (name.length > 3 && email.length > 9 && password.length > 7 && location.length > 7) {
-      setFilled(true)
-    }
-    const Otp = dispatch(sendOtpUnregistered({ email }))
+    const Otp = dispatch(sendOtpUnregistered({ email ,name,password,location}))
     Otp
-      .then((data) => {
-      })
+    .then((data) => {
+      console.log("Otp sent")
+      setFilled(true)
+    })
       .catch((error) => {
         setOtpErr(error.error[0])
+        setError(error.error[0])
       })
   }
 
   const handleVerifyOtp = (event) => {
     event.preventDefault();
+    setVerifyErr([])
     dispatch(verifyOtp({ email, otp }))
-      .then((data) => {
+    .then((data) => {
         const user = {
           email,
           password,
@@ -47,19 +48,21 @@ export default function Register() {
         }
         const register = dispatch(userRegister(user))
         register
-          .then((data) => navigate('/login'))
+          .then((data) => {
+            navigate('/login')
+        })
           .catch((error) => {
             setError(error.error[0])
           })
       })
       .catch((error) => {
         setVerifyErr(error.error[0])
-
       });
   };
 
   const handleResendOtp = (event) => {
     event.preventDefault();
+    setVerifyErr([])
     handleSubmit(event);
   }
 

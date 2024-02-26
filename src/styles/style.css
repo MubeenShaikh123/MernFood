@@ -4,7 +4,7 @@
 
 /* ======Start Style navbar======  */
 
-body::-webkit-scrollbar{
+body::-webkit-scrollbar {
     width: 0;
 }
 
@@ -28,26 +28,30 @@ body::-webkit-scrollbar{
     justify-content: center;
     height: 100vh;
     position: relative;
-    background: url('../images//bg-images/bg/lily-banse--YHSwy6uqvk-unsplash.jpg');
+    /* background: url('../images//bg-images/bg/haseeb-jamil-J9lD6FS6_cs-unsplash.jpg');
+     */
     background-size: cover;
+    background: #e0e0e0;
 }
 
 .loginform {
-    backdrop-filter: blur(20px) brightness(1.5);
+    /* backdrop-filter: blur(20px) brightness(1.5); */
     /* box-shadow:0 0 10px rgba(255,255,255,0.5); */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); */
     width: 100%;
     max-width: 500px;
     min-height: 300px;
     position: absolute;
     align-items: center;
     z-index: 1;
-    background: transparent;
-    border: 2px solid rgba(255, 255, 255, 0.2);
+    /* background: transparent; */
+    /* border: 2px solid rgba(255, 255, 255, 0.2); */
+    /* border-radius: 10px; */
     border-radius: 10px;
-
+    background: #e0e0e0;
+    box-shadow: -20px -20px 60px #bebebe,
+        20px 20px 60px #ffffff;
 }
-
 
 .loginform .page-buttons button {
     padding: .5rem 1.2rem;
@@ -81,17 +85,26 @@ body::-webkit-scrollbar{
 }
 
 .loginform .form .input-group .input-text {
-    font-size: 14px;
-    font-weight: bold;
-    outline: none;
-    color: var(--form-text-color);
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    background: transparent;
-    border-radius: 50px !important;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    padding: 11px 45px 11px 20px;
+    /* font-size: 14px; */
+    /* font-weight: bold; */
+    /* outline: none; */
+    /* color: var(--form-text-color); */
+    /* border: 2px solid rgba(255, 255, 255, 0.2); */
+    /* background: transparent; */
+    /* border-radius: 50px !important; */
+    /* box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); */
+    /* padding: 11px 45px 11px 20px; */
     width: 100%;
     margin-bottom: 10px;
+    border: none;
+    border-radius: 50px !important;
+    padding: 15px;
+    background-color: #e8e8e8;
+    box-shadow: 6px 6px 12px #ffffff,
+        -6px -6px 12px #c5c5c5;
+    font-size: medium;
+    font-weight: bold;
+    /* max-width: 200px; */
 }
 
 .loginform .form .input-group .input-text::placeholder {
@@ -101,17 +114,53 @@ body::-webkit-scrollbar{
 }
 
 .loginform .form .button-group .primary-button {
-    font-size: 14px;
-    outline: none;
-    color: white;
-    border-radius: 50px;
-    border: 1px solid transparent;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    padding: 11px 20px;
-    background-color: var(--form-text-color);
+    /* font-size: 14px; */
+    /* outline: none; */
+    /* color: white; */
+    /* border-radius: 50px; */
+    /* border: 1px solid transparent; */
+    /* box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); */
+    /* padding: 11px 20px; */
+    /* background-color: var(--form-text-color); */
     width: 100%;
     margin: 10px auto;
+    padding: 15px 25px;
+    border: unset;
+    border-radius: 15px;
+    color: #212121;
+    z-index: 1;
+    background: #e8e8e8;
+    position: relative;
+    font-weight: 1000;
+    font-size: 17px;
+    -webkit-box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
+    box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
+    transition: all 250ms;
+    overflow: hidden;
 
+}
+
+.loginform .form .button-group .primary-button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0;
+    border-radius: 15px;
+    background-color: #212121;
+    z-index: -1;
+    -webkit-box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
+    box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
+    transition: all 250ms
+}
+
+.loginform .form .button-group .primary-button:hover {
+    color: #e8e8e8;
+}
+
+.loginform .form .button-group .primary-button:hover::before {
+    width: 100%;
 }
 
 .icon {
@@ -123,11 +172,11 @@ body::-webkit-scrollbar{
 
 /* Forgot Password Styling*/
 
-.otpComponent{
+.otpComponent {
     padding: 0rem 0rem .5rem 0rem;
 }
 
-.optInput{
+.optInput {
     font-size: 14px;
     font-weight: bold;
     outline: none;
@@ -142,6 +191,7 @@ body::-webkit-scrollbar{
     margin-bottom: 10px;
     text-align: center;
 }
+
 /* End Forgot Password Styling */
 
 /* CSS for Modal */
@@ -157,7 +207,7 @@ body::-webkit-scrollbar{
     z-index: 1;
 }
 
-.modal-parent::-webkit-scrollbar{
+.modal-parent::-webkit-scrollbar {
     width: 0;
 }
 
@@ -175,7 +225,7 @@ body::-webkit-scrollbar{
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
 }
 
-.modal-parent .modal-content::-webkit-scrollbar{
+.modal-parent .modal-content::-webkit-scrollbar {
     width: 0;
 }
 
@@ -276,23 +326,24 @@ body::-webkit-scrollbar{
     top: 0;
     right: 0;
 }
-.myCarousel{
+
+.myCarousel {
     width: 100%;
     height: 500px;
     margin-bottom: 10px;
-  }
-  
-.myCarousel .carousel{
+}
+
+.myCarousel .carousel {
     height: 100%;
     width: 100%;
 }
 
-.myCarousel .carousel .carousel-inner{
+.myCarousel .carousel .carousel-inner {
     height: 100%;
     width: 100%;
 }
 
-.carousel-inner .carousel-item{
+.carousel-inner .carousel-item {
     height: 100%;
     width: 100%;
 }
@@ -302,7 +353,7 @@ body::-webkit-scrollbar{
     height: 100%;
     object-fit: fill;
     object-position: center;
-  }
+}
 
 /* .myCarousel .carousel .carousel-item img{
     object-fit: cover;

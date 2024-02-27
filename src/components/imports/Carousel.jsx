@@ -5,7 +5,7 @@ import { search } from '../../redux/reducer'
 export default function Carousel() {
   const dispatch = useDispatch()
   return (
-    <div className="myCarousel">
+    <div className="myCarousel position-relative ">
       <div id="carouselExampleIndicators" className="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
         <div className="carousel-inner">
           <div className="carousel-item active">
@@ -42,13 +42,23 @@ export default function Carousel() {
           <span className="visually-hidden">Next</span>
         </button>
       </div>
-      <div className="carousel-caption d-none d-sm-block ">
-        <input className="form-control me-2" style={{
+      <div className="carousel-caption d-none d-sm-block "
+      style={{
           position: 'absolute',
-          bottom: '1rem',
+          bottom: '2%',
           left: '50%',
           transform: 'translateX(-50%)',
-        }} type="search" placeholder="Search" aria-label="Search"
+          minWidth:'300px'
+        }}
+      >
+        <input className="form-control me-2" 
+        // style={{
+        //   position: 'absolute',
+        //   bottom: '1rem',
+        //   left: '50%',
+        //   transform: 'translateX(-50%)',
+        // }}
+         type="search" placeholder="Search" aria-label="Search"
           onChange={(e) => {
             const temp = e.target.value;
             dispatch(search(temp))

@@ -59,8 +59,8 @@ export default function Card(props) {
                 <div className="card-body">
                     <h5 className="card-title">{name}</h5>
                     <p className="card-text">{description}</p>
-                    <div>
-                        <select name="Quantity" dir='rtl' id="" onChange={(e) => setQty(e.target.value)}>
+                    <div className='pb-2'>
+                        <select name="Quantity" dir='ltr' id="" onChange={(e) => setQty(e.target.value)}>
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
@@ -78,7 +78,7 @@ export default function Card(props) {
                         <span>{finalPrice}</span>
                     </div>
                     <div>
-                        <button onClick={() => { handleAddToCart(name) }} className='btn btn-primary mt-2' >
+                        <button onClick={() => { handleAddToCart(name) }} className='btn mt-2' >
                             Add To Cart
                         </button>
                     </div>

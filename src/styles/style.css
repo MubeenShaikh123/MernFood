@@ -35,19 +35,12 @@ body::-webkit-scrollbar {
 }
 
 .loginform {
-    /* backdrop-filter: blur(20px) brightness(1.5); */
-    /* box-shadow:0 0 10px rgba(255,255,255,0.5); */
-    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); */
     width: 100%;
     max-width: 500px;
     min-height: 300px;
     position: absolute;
     align-items: center;
     z-index: 1;
-    /* background: transparent; */
-    /* border: 2px solid rgba(255, 255, 255, 0.2); */
-    /* border-radius: 10px; */
-    border-radius: 10px;
     background: #e0e0e0;
     box-shadow: -20px -20px 60px #bebebe,
         20px 20px 60px #ffffff;
@@ -85,15 +78,6 @@ body::-webkit-scrollbar {
 }
 
 .loginform .form .input-group .input-text {
-    /* font-size: 14px; */
-    /* font-weight: bold; */
-    /* outline: none; */
-    /* color: var(--form-text-color); */
-    /* border: 2px solid rgba(255, 255, 255, 0.2); */
-    /* background: transparent; */
-    /* border-radius: 50px !important; */
-    /* box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); */
-    /* padding: 11px 45px 11px 20px; */
     width: 100%;
     margin-bottom: 10px;
     border: none;
@@ -104,7 +88,6 @@ body::-webkit-scrollbar {
         -6px -6px 12px #c5c5c5;
     font-size: medium;
     font-weight: bold;
-    /* max-width: 200px; */
 }
 
 .loginform .form .input-group .input-text::placeholder {
@@ -114,58 +97,27 @@ body::-webkit-scrollbar {
 }
 
 .loginform .form .button-group .primary-button {
-    /* font-size: 14px; */
-    /* outline: none; */
-    /* color: white; */
-    /* border-radius: 50px; */
-    /* border: 1px solid transparent; */
-    /* box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); */
-    /* padding: 11px 20px; */
-    /* background-color: var(--form-text-color); */
     width: 100%;
-    margin: 10px auto;
-    padding: 15px 25px;
-    border: unset;
-    border-radius: 15px;
-    color: #212121;
-    z-index: 1;
+    color: #090909;
+    padding: 0.7em 1.7em;
+    font-size: 18px;
+    border-radius: 50px;
     background: #e8e8e8;
-    position: relative;
-    font-weight: 1000;
-    font-size: 17px;
-    -webkit-box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
-    box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
-    transition: all 250ms;
-    overflow: hidden;
-
+    cursor: pointer;
+    border: 1px solid #e8e8e8;
+    transition: all 0.3s;
+    box-shadow: 6px 6px 12px #ffffff,
+        -6px -6px 12px #c5c5c5;
 }
 
-.loginform .form .button-group .primary-button::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 0;
-    border-radius: 15px;
-    background-color: #212121;
-    z-index: -1;
-    -webkit-box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
-    box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
-    transition: all 250ms
-}
-
-.loginform .form .button-group .primary-button:hover {
-    color: #e8e8e8;
-}
-
-.loginform .form .button-group .primary-button:hover::before {
-    width: 100%;
+.loginform .form .button-group .primary-button:active {
+    color: #666;
+    box-shadow: inset 4px 4px 12px #c5c5c5, inset -4px -4px 12px #ffffff;
 }
 
 .icon {
     position: absolute;
-    top: 12px;
+    top: 17px;
     right: 25px;
     color: var(--form-text-color);
 }
@@ -177,19 +129,18 @@ body::-webkit-scrollbar {
 }
 
 .optInput {
-    font-size: 14px;
-    font-weight: bold;
-    outline: none;
-    color: var(--form-text-color);
     border: 2px solid rgba(255, 255, 255, 0.5);
-    background: transparent;
+    background-color: #e8e8e8;
     border-radius: 50% !important;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
     padding: 11px 20px 11px 20px;
     width: 60px;
     height: 60px;
     margin-bottom: 10px;
     text-align: center;
+    box-shadow: 6px 6px 12px #ffffff,
+        -6px -6px 12px #c5c5c5;
+    font-size: medium;
+    font-weight: bold;
 }
 
 /* End Forgot Password Styling */
@@ -258,8 +209,6 @@ body::-webkit-scrollbar {
 }
 
 .cartTable tr td {
-    /* border-bottom: 1px solid black; */
-    /* white-space: nowrap; */
     overflow: hidden;
 }
 
@@ -300,7 +249,6 @@ body::-webkit-scrollbar {
 }
 
 .modal-parent .modal-content .tableDiv .cartDiv {
-    /* background-color: yellow; */
     border: 1px solid transparent;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     border-radius: 4px;
@@ -331,6 +279,8 @@ body::-webkit-scrollbar {
     width: 100%;
     height: 500px;
     margin-bottom: 10px;
+    border-radius: 20px;
+    overflow: hidden;
 }
 
 .myCarousel .carousel {
@@ -355,13 +305,78 @@ body::-webkit-scrollbar {
     object-position: center;
 }
 
-/* .myCarousel .carousel .carousel-item img{
-    object-fit: cover;
-    object-position: center;
-} */
+.myCarousel .carousel-caption{
+}
 
 
 /* ==========End login style========== */
+
+/* ==========End card style========== */
+
+.card {
+    border-radius: 30px;
+    background: #e0e0e0;
+    box-shadow: 15px 15px 30px #bebebe,
+        -15px -15px 30px #ffffff;
+    /* border: 1px solid black; */
+    overflow: hidden;
+}
+
+.card .card-body div button {
+    appearance: none;
+    background-color: transparent;
+    border: 0.125em solid #1A1A1A;
+    border-radius: 0.9375em;
+    box-sizing: border-box;
+    color: #3B3B3B;
+    cursor: pointer;
+    display: inline-block;
+    font-family: Roobert, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-size: 16px;
+    font-weight: 600;
+    line-height: normal;
+    margin: 0;
+    min-height: 3.75em;
+    min-width: 0;
+    outline: none;
+    padding: 1em 2.3em;
+    text-align: center;
+    text-decoration: none;
+    transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    will-change: transform;
+}
+
+.card .card-body div button:disabled {
+    pointer-events: none;
+}
+
+.card .card-body div button:hover {
+    color: #fff;
+    background-color: #1A1A1A;
+    box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+    transform: translateY(-2px);
+}
+
+.card .card-body div button:active {
+    box-shadow: none;
+    transform: translateY(0);
+}
+
+.card .card-body div select{
+    background-color: #e0e0e0;
+    padding:2px 3px 2px 3px;
+    border-radius: 0.9375em;
+    margin-right: 4px;
+}
+
+.container .hr{
+    border-width: 3px;
+ }
+
+/* ==========End card style========== */
 
 /* ==========Start Footer style========== */
 

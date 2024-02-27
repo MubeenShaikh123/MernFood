@@ -57,7 +57,7 @@ export default function Body() {
         {foodCat.map((category) => (
           <div key={category._id}>
             <h1>{category.CategoryName}</h1>
-            <hr />
+            <hr  className='hr'/>
             <div className='row'>
               {foodItem
                 .filter(

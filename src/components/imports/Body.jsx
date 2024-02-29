@@ -15,21 +15,21 @@ export default function Body() {
 
   useEffect(() => {
     // Make an HTTP GET request to server's endpoint
-    axios.get('http://localhost:4000/api/foodItem')
+    axios.get('https://mern-food-app-l9yn.onrender.com/foodItem')
       .then((response) => {
         setFoodItem(response.data);
       })
       .catch((error) => {
         console.log(error);
       });
-    axios.get('http://localhost:4000/api/foodCategory')
+    axios.get('https://mern-food-app-l9yn.onrender.com/foodCategory')
       .then((response) => {
         setFoodCat(response.data);
       })
       .catch((error) => {
         console.log(error);
       });
-    axios.get(`http://localhost:4000/api/storedata?username=${username}`)
+    axios.get(`https://mern-food-app-l9yn.onrender.com/storedata?username=${username}`)
       .then((response) => {
         const storedata = response.data[0].cartData;
         storedata.forEach((item, index) => (

@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const baseUrl = 'http://localhost:4000/api'
+const baseUrl = 'https://mern-food-app-l9yn.onrender.com'
 
 export const login = (userCredentials) => {
   return axios.post(`${baseUrl}/login`, userCredentials)

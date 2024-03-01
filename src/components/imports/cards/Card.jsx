@@ -53,7 +53,7 @@ export default function Card(props) {
     }
 
     return (
-        <div>
+        <div className='d-flex justify-content-center '>
             <div className="card m-3 " style={{ width: "18rem", objectFit: "fill !important" }}>
                 <img className="card-img-top w-100 h-100" src={img} alt="Card" id='card_img' />
                 <div className="card-body">

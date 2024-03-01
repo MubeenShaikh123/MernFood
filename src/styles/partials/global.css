@@ -44,3 +44,7 @@
 body{
     background-color:#e0e0e0;
 }
+
+footer{
+    border-top: 3px solid #B0B1B2 !important;
+}

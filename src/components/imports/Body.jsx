@@ -15,21 +15,21 @@ export default function Body() {
 
   useEffect(() => {
     // Make an HTTP GET request to server's endpoint
-    axios.get('https://mern-food-app-l9yn.onrender.com/foodItem')
+    axios.get('https://mern-food-app-l9yn.onrender.com/api/foodItem')
       .then((response) => {
         setFoodItem(response.data);
       })
       .catch((error) => {
         console.log(error);
       });
-    axios.get('https://mern-food-app-l9yn.onrender.com/foodCategory')
+    axios.get('https://mern-food-app-l9yn.onrender.com/api/foodCategory')
       .then((response) => {
         setFoodCat(response.data);
       })
       .catch((error) => {
         console.log(error);
       });
-    axios.get(`https://mern-food-app-l9yn.onrender.com/storedata?username=${username}`)
+    axios.get(`https://mern-food-app-l9yn.onrender.com/api/storedata?username=${username}`)
       .then((response) => {
         const storedata = response.data[0].cartData;
         storedata.forEach((item, index) => (
@@ -46,9 +46,8 @@ export default function Body() {
       .catch((error) => {
         console.log(error);
       });
+      // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-
 
   return (
     <>

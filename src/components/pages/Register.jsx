@@ -14,7 +14,6 @@ export default function Register() {
   const [filled, setFilled] = useState(false)
   const [otp, setOtp] = useState('')
   const [verifyErr, setVerifyErr] = useState([])
-  const [otpErr, setOtpErr] = useState([])
   const [icon, setIcon] = useState(' fa fa-lock fa-lg')
   const [type, setType] = useState('password')
 
@@ -30,7 +29,6 @@ export default function Register() {
       setFilled(true)
     })
       .catch((error) => {
-        setOtpErr(error.error[0])
         setError(error.error[0])
       })
   }

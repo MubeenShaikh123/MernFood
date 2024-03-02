@@ -38,7 +38,7 @@ function Cart() {
             <td>{item.qty}</td>
             <td>{item.size}</td>
             <td>&#8377;{item.finalPrice}</td>
-            <td><button className='closeButton' onClick={() => handleDelete(item.name)}><i class="fa fa-solid fa-trash fa-lg"></i></button></td>
+            <td><button className='closeButton' onClick={() => handleDelete(item.name)}><i className="fa fa-solid fa-trash fa-lg"></i></button></td>
           </tr>
         ))}
       </div>
@@ -49,7 +49,7 @@ function Cart() {
             <span>{item.qty}</span>
             <span>{item.size}</span>
             <span>&#8377;{item.finalPrice}</span>
-            <button className='closeButton' onClick={() => handleDelete(item.name)}><i class="fa fa-solid fa-trash"></i></button>
+            <button className='closeButton' onClick={() => handleDelete(item.name)}><i className="fa fa-solid fa-trash"></i></button>
           </div>
         ))}
       </div>

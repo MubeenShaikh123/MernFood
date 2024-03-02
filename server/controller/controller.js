@@ -5,6 +5,32 @@ const jwt = require('jsonwebtoken');
 const { default: mongoose } = require('mongoose');
 const nodemailer = require('nodemailer');
 
+// Define the sendMail function
+const sendMail = (to, subject, text) => {
+  return new Promise((resolve, reject) => {
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.EMAIL,
+        pass: process.env.PASS,
+      },
+    });
+    const mailOptions = {
+      from: 'abc@gmail.com',
+      to: to,
+      subject: subject,
+      text: text,
+    };
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(info);
+      }
+    });
+  });
+};
+
 exports.register = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -136,6 +162,93 @@ exports.storedata = async (req, res) => {
   }
 }
 
+// exports.sendOtp = async (req, res) => {
+//   const errors = validationResult(req);
+//   if (!errors.isEmpty()) {
+//     const errorResponse = [];
+    
+//     errors.array().forEach((error) => {
+//       switch (error.msg) {
+//         case "Invalid Email Format":
+//           errorResponse.push({ field: "email", message: "Invalid Email Format" });
+//           break;
+//         default:
+//           errorResponse.push({ field: "unknown", message: "Unknown validation error" });
+//       }
+//     });
+//     return res.status(400).json({ error: errorResponse });
+//   }
+
+//   const userMail = req.body.email;
+//   const otp = String(Math.floor(Math.random() * 9000) + 1000);
+
+//   const transporter = nodemailer.createTransport({
+//     service: 'gmail',
+//     auth: {
+//       user: process.env.EMAIL,
+//       pass: process.env.PASS,
+//     },
+//   });
+//   const mailOptions = {
+//     from: 'abc@gmail.com',
+//     to: userMail,
+//     subject: 'OTP for your account',
+//     text: `Your OTP is: ${otp}`,
+//   };
+
+
+//   // Check if a user with the provided email exists in the database
+//   User.findOne({ email: userMail })
+//   .then((existingUser) => {
+//     if (existingUser) {
+//       // User exists, continue with OTP operations
+//       return Otp.findOne({ email: userMail });
+//     } else {
+//       // User does not exist, return an error
+//       return Promise.reject('User not found');
+//     }
+//   })
+//   .then((existingOtp) => {
+//     if (existingOtp) {
+//       // OTP exists, update it
+//       existingOtp.otp = otp;
+//       existingOtp.used = false;
+//       existingOtp.date = new Date();
+//       return existingOtp.save();
+//     } else {
+//         // OTP does not exist, create a new record
+//         const newOtp = new Otp({
+//           email: userMail,
+//           otp: otp,
+//           used: false,
+//         });
+//         return newOtp.save();
+//       }
+//     })
+//     .then(() => {
+//       // Send the email
+//       return new Promise((resolve, reject) => {
+//         transporter.sendMail(mailOptions, (error, info) => {
+//           if (error) {
+//             reject(error);
+//           } else {
+//             resolve(info);
+//           }
+//         });
+//       });
+//     })
+//     .then((info) => {
+//       res.json({ message: 'OTP Sent Successfully' });
+//     })
+//     .catch((error) => {
+//       if (error === 'User not found') {
+//         res.status(404).json({ error: [{ message: 'User not found' }] });
+//       } else {
+//         res.status(406).json({ error: [{ message: 'Error sending OTP' }] });
+//       }
+//     });
+// };
+
 exports.sendOtp = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -155,41 +268,25 @@ exports.sendOtp = async (req, res) => {
 
   const userMail = req.body.email;
   const otp = String(Math.floor(Math.random() * 9000) + 1000);
-
-  const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: process.env.EMAIL,
-      pass: process.env.PASS,
-    },
-  });
-  const mailOptions = {
-    from: 'abc@gmail.com',
-    to: userMail,
-    subject: 'OTP for your account',
-    text: `Your OTP is: ${otp}`,
-  };
-
-
   // Check if a user with the provided email exists in the database
   User.findOne({ email: userMail })
-  .then((existingUser) => {
-    if (existingUser) {
-      // User exists, continue with OTP operations
-      return Otp.findOne({ email: userMail });
-    } else {
-      // User does not exist, return an error
-      return Promise.reject('User not found');
-    }
-  })
-  .then((existingOtp) => {
-    if (existingOtp) {
-      // OTP exists, update it
-      existingOtp.otp = otp;
-      existingOtp.used = false;
-      existingOtp.date = new Date();
-      return existingOtp.save();
-    } else {
+    .then((existingUser) => {
+      if (existingUser) {
+        // User exists, continue with OTP operations
+        return Otp.findOne({ email: userMail });
+      } else {
+        // User does not exist, return an error
+        return Promise.reject('User not found');
+      }
+    })
+    .then((existingOtp) => {
+      if (existingOtp) {
+        // OTP exists, update it
+        existingOtp.otp = otp;
+        existingOtp.used = false;
+        existingOtp.date = new Date();
+        return existingOtp.save();
+      } else {
         // OTP does not exist, create a new record
         const newOtp = new Otp({
           email: userMail,
@@ -200,18 +297,12 @@ exports.sendOtp = async (req, res) => {
       }
     })
     .then(() => {
-      // Send the email
-      return new Promise((resolve, reject) => {
-        transporter.sendMail(mailOptions, (error, info) => {
-          if (error) {
-            reject(error);
-          } else {
-            resolve(info);
-          }
-        });
-      });
+      // Send the email using the sendMail function
+      const subject = 'OTP for your account';
+      const body = `Your OTP is: ${otp}`;
+      return sendMail(userMail, subject, body);
     })
-    .then((info) => {
+    .then(() => {
       res.json({ message: 'OTP Sent Successfully' });
     })
     .catch((error) => {
@@ -222,6 +313,86 @@ exports.sendOtp = async (req, res) => {
       }
     });
 };
+
+// exports.sendOtpUnregistered = async (req, res) => {
+//   const errors = validationResult(req);
+//   if (!errors.isEmpty()) {
+//     const errorResponse = [];
+//     errors.array().forEach(error => {
+//       switch (error.msg) {
+//         case 'Name must be at least 4 characters long':
+//           errorResponse.push({ field: 'name', message: 'Username is too short' });
+//           break;
+//         case 'Invalid email format':
+//           errorResponse.push({ field: 'email', message: 'Invalid email format' });
+//           break;
+//         case 'Password must be at least 8 characters long':
+//           errorResponse.push({ field: 'password', message: 'Password is too short' });
+//           break;
+//         case 'Add valid location':
+//           errorResponse.push({ field: 'location', message: 'Location required' });
+//           break;
+//         default:
+//           errorResponse.push({ field: 'unknown', message: 'Unknown validation error' });
+//           break;
+//       }
+//     });
+//     return res.status(400).json({ error: errorResponse });
+//   }
+//   const userMail = req.body.email;
+//   const otp = String(Math.floor(Math.random() * 9000) + 1000);
+//   const transporter = nodemailer.createTransport({
+//     service: 'gmail',
+//     auth: {
+//       user: process.env.EMAIL,
+//       pass: process.env.PASS,
+//     },
+//   });
+//   const mailOptions = {
+//     from: 'MernFood@gmail.com',
+//     to: userMail,
+//     subject: 'OTP for your account',
+//     text: `Your OTP is: ${otp}`,
+//   };
+
+//   // Check if an OTP with the provided email exists in the database
+//   Otp.findOne({ email: userMail })
+//     .then((existingOtp) => {
+//       if (existingOtp) {
+//         // OTP exists, update it
+//         existingOtp.otp = otp;
+//         existingOtp.used = false;
+//         existingOtp.date = new Date();
+//         return existingOtp.save();
+//       } else {
+//         // OTP does not exist, create a new record
+//         const newOtp = new Otp({
+//           email: userMail,
+//           otp: otp,
+//           used: false,
+//         });
+//         return newOtp.save();
+//       }
+//     })
+//     .then(() => {
+//       // Send the email
+//       return new Promise((resolve, reject) => {
+//         transporter.sendMail(mailOptions, (error, info) => {
+//           if (error) {
+//             reject(error);
+//           } else {
+//             resolve(info);
+//           }
+//         });
+//       });
+//     })
+//     .then((info) => {
+//       res.json({ message: 'OTP Sent Successfully' });
+//     })
+//     .catch((error) => {
+//       res.status(406).json({ error: [{ message: 'Error sending OTP' }] });
+//     });
+// };
 
 exports.sendOtpUnregistered = async (req, res) => {
   const errors = validationResult(req);
@@ -248,21 +419,9 @@ exports.sendOtpUnregistered = async (req, res) => {
     });
     return res.status(400).json({ error: errorResponse });
   }
+
   const userMail = req.body.email;
   const otp = String(Math.floor(Math.random() * 9000) + 1000);
-  const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: process.env.EMAIL,
-      pass: process.env.PASS,
-    },
-  });
-  const mailOptions = {
-    from: 'MernFood@gmail.com',
-    to: userMail,
-    subject: 'OTP for your account',
-    text: `Your OTP is: ${otp}`,
-  };
 
   // Check if an OTP with the provided email exists in the database
   Otp.findOne({ email: userMail })
@@ -284,18 +443,12 @@ exports.sendOtpUnregistered = async (req, res) => {
       }
     })
     .then(() => {
-      // Send the email
-      return new Promise((resolve, reject) => {
-        transporter.sendMail(mailOptions, (error, info) => {
-          if (error) {
-            reject(error);
-          } else {
-            resolve(info);
-          }
-        });
-      });
+      // Send the email using the sendMail function
+      const subject = 'OTP for your account';
+      const body = `Your OTP is: ${otp}`;
+      return sendMail(userMail, subject, body);
     })
-    .then((info) => {
+    .then(() => {
       res.json({ message: 'OTP Sent Successfully' });
     })
     .catch((error) => {
@@ -400,9 +553,6 @@ exports.changePassword = async (req, res) => {
         res.status(500).json({ error: [{ message: 'Error changing password' }] });
       }
     });
-
-
-
 }
 
 exports.addMenu = async (req, res) => {

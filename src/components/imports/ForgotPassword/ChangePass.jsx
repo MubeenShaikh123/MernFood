@@ -7,7 +7,7 @@ export default function ChangePass(props) {
       <form method='post' className='form' onSubmit={handleChangePassword}>
         <div className="form-group input-group ">
           <input type="text" className='input-text' onChange={(e) => { setPassword(e.target.value) }} placeholder='New Password' />
-          <i className="icon fa fa-lock fa-lg"></i>
+          <i className="icon fa fa-solid fa-unlock"></i>
         </div>
         <div className="form-group text-danger fw-bold text-center mb-1 ">
           {
@@ -15,8 +15,8 @@ export default function ChangePass(props) {
           }
         </div>
         <div className="form-group input-group ">
-          <input type="text" className='input-text' onChange={(e) => { setConfirmPassword(e.target.value) }} placeholder='Confirm New Password' />
-          <i className="icon fa fa-lock fa-lg"></i>
+          <input type="password" className='input-text' onChange={(e) => { setConfirmPassword(e.target.value) }} placeholder='Confirm New Password' />
+          <i className="icon fa fa-lock fa-lg "></i>
         </div>
         <div className="button-group form-group">
           <button className='btn primary-button'>Change Password</button>

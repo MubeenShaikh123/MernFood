@@ -17,13 +17,17 @@ function Cart() {
       .then((data) => {
         Swal.fire({
           title: 'Cart Data Removed Successfully',
-          icon: 'success'
+          icon: 'success',
+          showConfirmButton: false,
+          timer: 1200
         })
       })
       .catch((error) => {
         Swal.fire({
           title: 'Cart Data Removing Failed',
-          icon: 'error'
+          icon: 'error',
+          showConfirmButton: false,
+          timer: 1200
         })
       })
   }

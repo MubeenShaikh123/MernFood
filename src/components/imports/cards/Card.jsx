@@ -24,13 +24,12 @@ export default function Card(props) {
             const removeItem = dispatch(removeMenuItem(name))
             removeItem
                 .then((data) => {
-                    console.log("Cart Data Removed Successfully");
                     Swal.fire({
                         title: 'Cart Data Removed Successfully',
-                        text: 'Do you want to continue',
                         icon: 'success',
-                        confirmButtonText: 'Cool'
-                      })
+                        showConfirmButton: false,
+                        timer: 1200
+                    })
                 })
                 .catch((error) => {
                     console.log("Cart Data Removing Failed")
@@ -54,14 +53,18 @@ export default function Card(props) {
             .then((data) => {
                 Swal.fire({
                     title: 'Cart Data Added Successfully',
-                    icon: 'success'
-                  })
+                    icon: 'success',
+                    showConfirmButton: false,
+                    timer: 1200
                 })
-                .catch((error) => {
-                    Swal.fire({
-                        title: 'Failed To Add Cart Data',
-                        icon: 'error'
-                      })
+            })
+            .catch((error) => {
+                Swal.fire({
+                    title: 'Failed To Add Cart Data',
+                    icon: 'error',
+                    showConfirmButton: false,
+                    timer: 1200
+                })
             })
     }
 

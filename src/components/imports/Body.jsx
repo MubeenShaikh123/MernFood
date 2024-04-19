@@ -23,7 +23,9 @@ export default function Body() {
       .catch((error) => {
         Swal.fire({
           title: 'Error Connecting With Server',
-          icon: 'error'
+          icon: 'error',
+          showConfirmButton: false,
+          timer: 1200
         })
       });
     axios.get('https://mern-food-app-l9yn.onrender.com/api/foodCategory')
@@ -50,7 +52,7 @@ export default function Body() {
       .catch((error) => {
         console.log(error);
       });
-      // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -60,7 +62,7 @@ export default function Body() {
         {foodCat.map((category) => (
           <div key={category._id}>
             <h1>{category.CategoryName}</h1>
-            <hr  className='hr'/>
+            <hr className='hr' />
             <div className='row'>
               {foodItem
                 .filter(

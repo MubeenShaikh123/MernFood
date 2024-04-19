@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addMenuItem, removeMenuItem } from '../../../redux/actions'
+import Swal from 'sweetalert2'
 
 export default function Card(props) {
 
@@ -23,7 +24,13 @@ export default function Card(props) {
             const removeItem = dispatch(removeMenuItem(name))
             removeItem
                 .then((data) => {
-                    console.log("Cart Data Removed Successfully")
+                    console.log("Cart Data Removed Successfully");
+                    Swal.fire({
+                        title: 'Cart Data Removed Successfully',
+                        text: 'Do you want to continue',
+                        icon: 'success',
+                        confirmButtonText: 'Cool'
+                      })
                 })
                 .catch((error) => {
                     console.log("Cart Data Removing Failed")
@@ -45,10 +52,16 @@ export default function Card(props) {
         const addMenuItems = dispatch(addMenuItem(data))
         addMenuItems
             .then((data) => {
-                console.log("Cart Data Added Successfully")
-            })
-            .catch((error) => {
-                console.log("Cart Data Addiing Failed")
+                Swal.fire({
+                    title: 'Cart Data Added Successfully',
+                    icon: 'success'
+                  })
+                })
+                .catch((error) => {
+                    Swal.fire({
+                        title: 'Failed To Add Cart Data',
+                        icon: 'error'
+                      })
             })
     }
 

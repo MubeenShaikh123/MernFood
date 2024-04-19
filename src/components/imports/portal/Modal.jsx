@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import Cart from '../Cart'
 import { useDispatch, useSelector } from 'react-redux'
 import { checkoutAction } from '../../../redux/actions';
+import Swal from 'sweetalert2';
 
 export default function Modal({ onClose }) {
   const items = useSelector((state) => state.cart.items)
@@ -14,10 +15,16 @@ export default function Modal({ onClose }) {
     const check = dispatch(checkoutAction(user))
     check
       .then((data) => {
-        console.log("Checkout Successful")
+        Swal.fire({
+          title: 'Checkout Successful',
+          icon: 'success'
+        })
       })
       .catch((error) => {
-        console.log("Checkout Failed")
+        Swal.fire({
+          title: 'Checkout Failed',
+          icon: 'error'
+        })
       })
   }
 

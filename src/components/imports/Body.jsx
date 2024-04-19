@@ -4,6 +4,7 @@ import Card from './cards/Card'
 import { useDispatch, useSelector } from 'react-redux/es/exports';
 import Carousel from './Carousel';
 import { addItemToCart } from '../../redux/reducer';
+import Swal from 'sweetalert2';
 
 
 export default function Body() {
@@ -20,7 +21,10 @@ export default function Body() {
         setFoodItem(response.data);
       })
       .catch((error) => {
-        console.log(error);
+        Swal.fire({
+          title: 'Error Connecting With Server',
+          icon: 'error'
+        })
       });
     axios.get('https://mern-food-app-l9yn.onrender.com/api/foodCategory')
       .then((response) => {

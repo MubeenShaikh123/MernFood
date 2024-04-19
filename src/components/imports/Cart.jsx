@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { removeMenuItem } from '../../redux/actions';
+import Swal from 'sweetalert2';
 
 function Cart() {
   const items = useSelector((state) => state.cart.items)
@@ -14,10 +15,16 @@ function Cart() {
     const removeItem = dispatch(removeMenuItem(data))
     removeItem
       .then((data) => {
-        console.log("Cart Data Removed Successfully")
+        Swal.fire({
+          title: 'Cart Data Removed Successfully',
+          icon: 'success'
+        })
       })
       .catch((error) => {
-        console.log("Cart Data Removing Failed")
+        Swal.fire({
+          title: 'Cart Data Removing Failed',
+          icon: 'error'
+        })
       })
   }
   return (

@@ -11,7 +11,7 @@ export default function Carousel() {
           <div className="carousel-item active">
             <img
               className="d-block w-100"
-              src="https://source.unsplash.com/random/900x700/?burger"
+              src="https://source.unsplash.com/random/900x700/?car"
               alt=""
             />
           </div>

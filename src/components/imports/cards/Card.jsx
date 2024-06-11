@@ -1,10 +1,14 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addMenuItem, removeMenuItem } from '../../../redux/actions'
 import Swal from 'sweetalert2'
+import Modal2 from '../portal/Model2'
 
 export default function Card(props) {
-
+    const imageRef = useRef(null)
+    const nameRef = useRef(null)
+    const desRef = useRef(null)
+    const [modelView, setmodelView] = useState(false)
     const username = useSelector((state) => state.cart.email) || "MiyaBhai"
     const { img, name, description } = props.cardData
     const dispatch = useDispatch()
@@ -14,8 +18,18 @@ export default function Card(props) {
     let priseOption = Object.keys(options)
     const [size, setSize] = useState(priseOption[0])
     let finalPrice = qty * parseInt(options[size])
-    const handleAddToCart = () => {
-
+    useEffect(() => {
+        const handleOpenCart = (event) => {
+            setmodelView(true)
+        }
+        imageRef.current.addEventListener('click', handleOpenCart);
+        nameRef.current.addEventListener('click', handleOpenCart);
+        desRef.current.addEventListener('click', handleOpenCart);
+    }, []);
+    const handleClose = () => {
+        setmodelView(false)
+    }
+    const handleAddToCart = (name) => {
         const itemIndex = items.findIndex(
             (item) => item.name === name
         );
@@ -69,37 +83,40 @@ export default function Card(props) {
     }
 
     return (
-        <div className='d-flex justify-content-center '>
-            <div className="card m-3 " style={{ width: "18rem", objectFit: "fill !important" }}>
-                <img className="card-img-top w-100 h-100" src={img} alt="Card" id='card_img' />
-                <div className="card-body">
-                    <h5 className="card-title">{name}</h5>
-                    <p className="card-text">{description}</p>
-                    <div className='pb-2'>
-                        <select name="Quantity" dir='ltr' id="" onChange={(e) => setQty(e.target.value)}>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                        </select>
-                        <select onClick={(e) => setSize(e.target.value)}>
-                            {
-                                priseOption.map((data) => {
-                                    return (<option key={data} value={data}>{data}</option>)
-                                })
-                            }
-                        </select>
-                        <span className='ps-4'>Total : </span>
-                        <span>{finalPrice}</span>
-                    </div>
-                    <div>
-                        <button onClick={() => { handleAddToCart(name) }} className='btn mt-2' >
-                            Add To Cart
-                        </button>
+        <>
+            {modelView ? <Modal2 onClose={handleClose} items={props.cardData} handleAddToCart={handleAddToCart}></Modal2> : ''}
+            <div className='d-flex justify-content-center '>
+                <div className="card m-3 " style={{ width: "18rem", objectFit: "fill !important" }}>
+                    <img ref={imageRef} className="card-img-top w-100 h-100" src={img} alt="Card" id='card_img' />
+                    <div className="card-body">
+                        <h5 ref={nameRef} className="card-title">{name}</h5>
+                        <p ref={desRef} className="card-text">{description}</p>
+                        <div className='pb-2'>
+                            <select name="Quantity" dir='ltr' id="" onChange={(e) => setQty(e.target.value)}>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                            <select onClick={(e) => setSize(e.target.value)}>
+                                {
+                                    priseOption.map((data) => {
+                                        return (<option key={data} value={data}>{data}</option>)
+                                    })
+                                }
+                            </select>
+                            <span className='ps-4'>Total : </span>
+                            <span>{finalPrice}</span>
+                        </div>
+                        <div>
+                            <button onClick={(event) => { handleAddToCart(name) }} className='btn mt-2' >
+                                Add To Cart
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div >
+            </div >
+        </>
     )
 }

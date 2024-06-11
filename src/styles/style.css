@@ -197,6 +197,39 @@ body::-webkit-scrollbar {
     text-transform: uppercase;
 }
 
+.modal-parent .modal-content .m-auto h5 {
+    position: relative;
+    display: inline-block;
+}
+
+.modal-parent .modal-content .m-auto h5::after {
+    width: 100%;
+    height: 2px;
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 0%;
+    transform: translateY(-100%);
+    background: rgb(255, 255, 255);
+    background: linear-gradient(90deg, rgba(255, 255, 255, 1) 0%, rgba(0, 0, 0, 1) 7%, rgba(0, 0, 0, 1) 93%, rgba(255, 255, 255, 1) 100%);
+}
+
+.modal-parent .modal-content div div img{
+    position: relative;
+    height: 50vh;
+    width: 100%;
+    max-width: 500px;
+    box-sizing: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    -webkit-box-reflect: right 2px linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
+}
+
+.modal-parent .modal-content div div .over{
+    box-sizing: border-box;
+    -webkit-box-reflect: left 2px linear-gradient(to left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
+
+}
+
 .cartTable {
     border-collapse: separate;
     table-layout: fixed;
@@ -362,16 +395,16 @@ body::-webkit-scrollbar {
     transform: translateY(0);
 }
 
-.card .card-body div select{
+.card .card-body div select {
     background-color: #e0e0e0;
-    padding:2px 3px 2px 3px;
+    padding: 2px 3px 2px 3px;
     border-radius: 0.9375em;
     margin-right: 4px;
 }
 
-.container .hr{
+.container .hr {
     border-width: 3px;
- }
+}
 
 /* ==========End card style========== */
 

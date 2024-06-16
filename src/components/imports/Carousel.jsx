@@ -1,6 +1,9 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { search } from '../../redux/reducer'
+import imgsrc1 from '../../images/amirali-mirhashemian-ZSukCSw5VV4-unsplash.jpg'
+import imgsrc2 from '../../images/ivan-torres-MQUqbmszGGM-unsplash.jpg'
+import imgsrc3 from '../../images/robin-stickel-tzl1UCXg5Es-unsplash.jpg'
 
 export default function Carousel() {
   const dispatch = useDispatch()
@@ -11,14 +14,21 @@ export default function Carousel() {
           <div className="carousel-item active">
             <img
               className="d-block w-100"
-              src="https://source.unsplash.com/random/900x700/?car"
+              src={imgsrc1}
               alt=""
             />
           </div>
           <div className="carousel-item">
             <img
               className="d-block w-100"
-              src="https://source.unsplash.com/random/900x700/?pizza"
+              src={imgsrc2}
+              alt=""
+            />
+          </div>
+          <div className="carousel-item">
+            <img
+              className="d-block w-100"
+              src={imgsrc3}
               alt=""
             />
           </div>

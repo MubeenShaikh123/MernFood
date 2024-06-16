@@ -11,7 +11,6 @@ export default function Modal({ onClose }) {
   const dispatch = useDispatch()
   const user = { username }
   const onCheckout = () => {
-    console.log("model", user)
     const check = dispatch(checkoutAction(user))
     check
       .then((data) => {

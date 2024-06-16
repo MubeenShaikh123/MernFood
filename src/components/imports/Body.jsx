@@ -15,8 +15,16 @@ export default function Body() {
   const [foodCat, setFoodCat] = useState([])
 
   useEffect(() => {
+    const token = localStorage.getItem('x-access-token');
+    if (!token) {
+      console.error('No JWT token found in localStorage');
+    }
     // Make an HTTP GET request to server's endpoint
-    axios.get('https://mern-food-app-l9yn.onrender.com/api/foodItem')
+    axios.get('https://mern-food-app-l9yn.onrender.com/api/foodItem',{
+      headers: {
+        'x-access-token': token
+      }
+    })
       .then((response) => {
         setFoodItem(response.data);
       })
@@ -28,14 +36,21 @@ export default function Body() {
           timer: 1200
         })
       });
-    axios.get('https://mern-food-app-l9yn.onrender.com/api/foodCategory')
+    axios.get('https://mern-food-app-l9yn.onrender.com/api/foodCategory', {
+      headers: {
+        'x-access-token': token
+      }
+    })
       .then((response) => {
         setFoodCat(response.data);
       })
       .catch((error) => {
-        console.log(error);
       });
-    axios.get(`https://mern-food-app-l9yn.onrender.com/api/storedata?username=${username}`)
+    axios.get(`https://mern-food-app-l9yn.onrender.com/api/storedata?username=${username}`,{
+      headers: {
+        'x-access-token': token
+      }
+    })
       .then((response) => {
         const storedata = response.data[0].cartData;
         storedata.forEach((item, index) => (

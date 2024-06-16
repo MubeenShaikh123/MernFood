@@ -22,12 +22,11 @@ export default function Register() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const Otp = dispatch(sendOtpUnregistered({ email ,name,password,location}))
+    const Otp = dispatch(sendOtpUnregistered({ email, name, password, location }))
     Otp
-    .then((data) => {
-      console.log("Otp sent")
-      setFilled(true)
-    })
+      .then((data) => {
+        setFilled(true)
+      })
       .catch((error) => {
         setError(error.error[0])
       })
@@ -37,7 +36,7 @@ export default function Register() {
     event.preventDefault();
     setVerifyErr([])
     dispatch(verifyOtp({ email, otp }))
-    .then((data) => {
+      .then((data) => {
         const user = {
           email,
           password,
@@ -48,7 +47,7 @@ export default function Register() {
         register
           .then((data) => {
             navigate('/login')
-        })
+          })
           .catch((error) => {
             setError(error.error[0])
           })

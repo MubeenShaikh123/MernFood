@@ -119,10 +119,19 @@ exports.login = async (req, res) => {
   if (!isMatch) {
     return res.status(400).json({ error: [{ field: "password", message: 'Incorrect password' }] })
   }
-  const token = jwt.sign({ id: document._id }, process.env.JWT)
+  const token = jwt.sign({ id: document._id, email: document.email }, process.env.JWT, { expiresIn: '1h' });
   const name = document.name
   return res.json({ token, email, name })
 
+}
+
+exports.authenticate = async (req, res) => {
+  if(req.user){
+    const email=req.user.email;
+    console.log('asdksahfjkgsadljkfhjksdhfjkds',req.user)
+    return res.json({email})
+  }
+  return res.status(401).json({ error: 'Invalid or missing token' });
 }
 
 exports.foodCategory = async (req, res) => {
@@ -166,7 +175,7 @@ exports.storedata = async (req, res) => {
 //   const errors = validationResult(req);
 //   if (!errors.isEmpty()) {
 //     const errorResponse = [];
-    
+
 //     errors.array().forEach((error) => {
 //       switch (error.msg) {
 //         case "Invalid Email Format":
@@ -253,7 +262,7 @@ exports.sendOtp = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     const errorResponse = [];
-    
+
     errors.array().forEach((error) => {
       switch (error.msg) {
         case "Invalid Email Format":

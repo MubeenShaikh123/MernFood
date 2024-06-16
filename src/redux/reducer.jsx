@@ -11,7 +11,8 @@ const storeSlice = createSlice({
     reducers: {
         search: (state, action) => {
             state.searchText = action.payload
-        },
+        }
+        ,
         addItemToCart: (state, action) => {
             const itemToBeRemoved = state.items.findIndex(item => item.name === action.payload.name)
             if (itemToBeRemoved !== -1) {
@@ -49,5 +50,5 @@ const storeSlice = createSlice({
     }
 })
 
-export const { addItemToCart, removeItemFromCart, search, loginFailure, loginSuccess, registerFailure, registerSuccess, logoutSuccess, setEmail, checkoutSuccess } = storeSlice.actions
+export const { addItemToCart, removeItemFromCart, search, addEmail, loginFailure, loginSuccess, registerFailure, registerSuccess, logoutSuccess, setEmail, checkoutSuccess } = storeSlice.actions
 export default storeSlice.reducer;

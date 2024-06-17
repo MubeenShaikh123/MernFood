@@ -21,7 +21,7 @@ function App() {
       console.log("No access token found on localstorage")
     }
 
-    fetch('https://mern-food-app-l9yn.onrender.com/api/authenticate', {
+    fetch('https://mernfoodserver.onrender.com/api/authenticate', {
       method: 'GET',
       headers: {
         'x-access-token': x_access_token

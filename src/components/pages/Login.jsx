@@ -5,8 +5,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import { userLogin } from '../../redux/actions'
 
 export default function Login() {
-  const [email, setEmail] = useState('mubeenshaikh8072@gmail.com')
-  const [password, setPassword] = useState('asdasdasd')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [icon, setIcon] = useState(' fa fa-lock fa-lg')
   const [type, setType] = useState('password')

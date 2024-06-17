@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const baseUrl = 'https://mern-food-app-l9yn.onrender.com/api'
+const baseUrl = 'https://mernfoodserver.onrender.com/api'
 // const baseUrl = 'http://localhost:4000/api'
 
 export const login = (userCredentials) => {

@@ -61,6 +61,7 @@ export default function Register() {
           })
           .catch((error) => {
             setError(error.error[0])
+            setVerifyErr(error.error[0])
           })
       })
       .catch((error) => {

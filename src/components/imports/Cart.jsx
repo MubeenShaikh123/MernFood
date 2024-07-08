@@ -1,13 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { removeMenuItem } from '../../redux/actions';
 import Swal from 'sweetalert2';
 
 function Cart() {
+  const [isLoading, setIsLoading] = useState(false)
   const items = useSelector((state) => state.cart.items)
   const username = useSelector((state) => state.cart.email) || "MiyaBhai"
   const dispatch = useDispatch()
   const handleDelete = (name) => {
+    if(isLoading){
+      return;
+    }
+    setIsLoading(true)
     const data = {
       username,
       name
@@ -15,6 +20,7 @@ function Cart() {
     const removeItem = dispatch(removeMenuItem(data))
     removeItem
       .then((data) => {
+        setIsLoading(false)
         Swal.fire({
           title: 'Cart Data Removed Successfully',
           icon: 'success',
@@ -23,6 +29,7 @@ function Cart() {
         })
       })
       .catch((error) => {
+        setIsLoading(false);
         Swal.fire({
           title: 'Cart Data Removing Failed',
           icon: 'error',

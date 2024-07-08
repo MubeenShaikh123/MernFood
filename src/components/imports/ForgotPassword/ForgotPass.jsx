@@ -18,32 +18,44 @@ export default function ForgotPass(props) {
   const [changePassErr, setChangePassErr] = useState([]);
   const [isOtpSent, setIsOtpSent] = useState(false)
   const [isOtpVerified, setIsOtpVerified] = useState(false)
-
+  const [isLoading, setIsLoading] = useState(false)
   const handleSendOtp = (event) => {
     if (event) {
       event.preventDefault();
     }
+    if (isLoading) {
+      return;
+    }
+    setIsLoading(true)
     setOtpErr([])
     setVerifyErr([])
     const Otp = dispatch(sendOtp({ email }))
     Otp
       .then((data) => {
         setIsOtpSent(true)
+        setIsLoading(false)
       })
       .catch((error) => {
         setOtpErr(error.error[0])
+        setIsLoading(false)
       })
   }
 
   const handleVerifyOtp = (event) => {
     event.preventDefault();
+    if (isLoading) {
+      return;
+    }
+    setIsLoading(true)
     setVerifyErr([])
     dispatch(verifyOtp({ email, otp }))
       .then((data) => {
         setIsOtpVerified(true)
+        setIsLoading(false)
       })
       .catch((error) => {
         setVerifyErr(error.error[0])
+        setIsLoading(false)
       });
   };
 
@@ -54,7 +66,10 @@ export default function ForgotPass(props) {
   const handleChangePassword = (event) => {
     event.preventDefault();
     setChangePassErr([])
-
+    if (isLoading) {
+      return;
+    }
+    setIsLoading(true)
     const validatePassword = () => {
       return new Promise((resolve, reject) => {
         if (password === confirmPassword && password.length > 7) {
@@ -74,9 +89,11 @@ export default function ForgotPass(props) {
       })
       .then((data) => {
         navigate('/login')
+        setIsLoading(false)
       })
       .catch((error) => {
         setChangePassErr({ message: error });
+        setIsLoading(false)
       });
   };
 
@@ -86,11 +103,11 @@ export default function ForgotPass(props) {
         {
           isOtpSent ?
             isOtpVerified ?
-              <ChangePass data={{ changePassErr, setPassword, setConfirmPassword, handleChangePassword }}></ChangePass>
+              <ChangePass data={{ changePassErr, setPassword, setConfirmPassword, handleChangePassword, isLoading }}></ChangePass>
               :
-              <VerifyOtp data={{ handleVerifyOtp, handleResendOtp, setOtp, verifyErr }}></VerifyOtp>
+              <VerifyOtp data={{ handleVerifyOtp, handleResendOtp, setOtp, verifyErr, isLoading }}></VerifyOtp>
             :
-            <SendOtp data={{ handleSendOtp, setEmail, otpErr }}></SendOtp>
+            <SendOtp data={{ handleSendOtp, setEmail, otpErr, isLoading }}></SendOtp>
         }
       </div>
     </div>

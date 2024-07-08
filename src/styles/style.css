@@ -214,7 +214,7 @@ body::-webkit-scrollbar {
     background: linear-gradient(90deg, rgba(255, 255, 255, 1) 0%, rgba(0, 0, 0, 1) 7%, rgba(0, 0, 0, 1) 93%, rgba(255, 255, 255, 1) 100%);
 }
 
-.modal-parent .modal-content div div img{
+.modal-parent .modal-content div div img {
     position: relative;
     height: 50vh;
     width: 100%;
@@ -224,7 +224,7 @@ body::-webkit-scrollbar {
     -webkit-box-reflect: right 2px linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
 }
 
-.modal-parent .modal-content div div .over{
+.modal-parent .modal-content div div .over {
     box-sizing: border-box;
     -webkit-box-reflect: left 2px linear-gradient(to left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
 

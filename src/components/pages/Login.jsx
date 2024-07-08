@@ -10,19 +10,26 @@ export default function Login() {
   const [error, setError] = useState('')
   const [icon, setIcon] = useState(' fa fa-lock fa-lg')
   const [type, setType] = useState('password')
+  const [isLoading, setIsLoading] = useState(false)
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
   const handleSubmit = (event) => {
     event.preventDefault()
+    if (isLoading) {
+      return;
+    }
+    setIsLoading(true)
     const user = { email, password }
     const login = dispatch(userLogin(user))
     login
       .then((data) => {
         navigate('/')
+        setIsLoading(false)
       })
       .catch((error) => {
         setError(error.error[0])
+        setIsLoading(false)
       })
   }
 
@@ -38,7 +45,7 @@ export default function Login() {
 
 
   const loginData = {
-    error, setEmail, setPassword, handleSubmit
+    error, setEmail, setPassword, handleSubmit, isLoading
   }
 
   const showPass = {

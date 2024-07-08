@@ -1,7 +1,7 @@
 import React from 'react'
 
 export default function RegisterForm(props) {
-  const { error, setName, setLocation, setEmail, setPassword, handleSubmit } = props.registerData.registerData
+  const { error, setName, setLocation, setEmail, setPassword, handleSubmit ,isLoading } = props.registerData.registerData
   const { icon, type, handleToggle } = props.registerData.showPass
   return (
     <div>
@@ -43,7 +43,7 @@ export default function RegisterForm(props) {
           }
         </div>
         <div className="button-group form-group">
-          <button className='btn primary-button'>Register</button>
+          <button style={{ cursor: isLoading ? 'wait' : 'pointer'}} className='btn primary-button'>{isLoading ? 'Loading...' : 'Register'}</button>
         </div>
       </form>
     </div>

@@ -1,7 +1,7 @@
 import React from 'react'
 
 export default function SendOtp(props) {
-  const { handleSendOtp, setEmail, otpErr } = props.data
+  const { handleSendOtp, setEmail, otpErr ,isLoading} = props.data
   return (
     <form method='post' className='form' onSubmit={handleSendOtp}>
       <div className="form-group input-group ">
@@ -13,17 +13,8 @@ export default function SendOtp(props) {
           otpErr ? otpErr.message : ''
         }
       </div>
-
-      {/* {
-              (email.length>10)?
-            <div className="otpComponent form-group input-group d-flex justify-content-evenly">
-            <OtpValidate numInputs={4} />
-            </div>
-              :
-              ''
-            } */}
       <div className="button-group form-group">
-        <button className='btn primary-button'>Send OTP</button>
+        <button style={{ cursor: isLoading ? 'wait' : 'pointer'}}  className='btn primary-button'>{isLoading ? 'Loading...' : 'Send OTP'}</button>
       </div>
     </form>
   )

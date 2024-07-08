@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ReactDOM from 'react-dom';
 import Cart from '../Cart'
 import { useDispatch, useSelector } from 'react-redux'
@@ -6,14 +6,20 @@ import { checkoutAction } from '../../../redux/actions';
 import Swal from 'sweetalert2';
 
 export default function Modal({ onClose }) {
+  const [isLoading, setIsLoading] = useState(false)
   const items = useSelector((state) => state.cart.items)
   const username = useSelector((state) => state.cart.email) || "MiyaBhai"
   const dispatch = useDispatch()
   const user = { username }
   const onCheckout = () => {
+    if (isLoading) {
+      return;
+    }
+    setIsLoading(true)
     const check = dispatch(checkoutAction(user))
     check
       .then((data) => {
+        setIsLoading(false)
         Swal.fire({
           title: 'Checkout Successful',
           icon: 'success',
@@ -22,6 +28,7 @@ export default function Modal({ onClose }) {
         })
       })
       .catch((error) => {
+        setIsLoading(false)
         Swal.fire({
           title: 'Checkout Failed',
           icon: 'error',
@@ -44,7 +51,7 @@ export default function Modal({ onClose }) {
                 <div className="tableDiv d-sm-none">
                   <Cart></Cart>
                 </div>
-                <button className='checkout-button btn btn-success ' onClick={onCheckout}>Checkout</button>
+                <button style={{ cursor: isLoading ? 'wait' : 'pointer' }} className='checkout-button btn btn-success ' onClick={onCheckout}>{isLoading ? 'Loading...' : 'Checkout'}</button>
               </>
           }
 

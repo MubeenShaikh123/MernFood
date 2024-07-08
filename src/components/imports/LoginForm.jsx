@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 export default function LoginForm(props) {
-  const { error, setEmail, setPassword, handleSubmit } = props.loginData.loginData
+  const { error, setEmail, setPassword, handleSubmit, isLoading } = props.loginData.loginData
   const { icon, type, handleToggle } = props.loginData.showPass
   return (
     <div>
@@ -31,7 +31,7 @@ export default function LoginForm(props) {
           }
         </div>
         <div className="button-group form-group">
-          <button className='btn primary-button'>Login</button>
+          <button style={{ cursor: isLoading ? 'wait' : 'pointer'}} className='btn primary-button cursor-pointer' >{isLoading ? 'Loading...' : 'Login'}</button>
         </div>
       </form>
     </div>

@@ -35,6 +35,7 @@ function App() {
       })
       .then(data => {
         dispatch(setEmail({ email: data.email }))
+        console.log("data.email : ",data.email);
         dispatch(loginSuccess())
         isLoggedIn=true;
         navigate("./")

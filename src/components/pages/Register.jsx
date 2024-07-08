@@ -16,27 +16,38 @@ export default function Register() {
   const [verifyErr, setVerifyErr] = useState([])
   const [icon, setIcon] = useState(' fa fa-lock fa-lg')
   const [type, setType] = useState('password')
-
+  const [isLoading, setIsLoading] = useState(false)
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    if (isLoading) {
+      return;
+    }
+    setIsLoading(true);
     const Otp = dispatch(sendOtpUnregistered({ email, name, password, location }))
     Otp
       .then((data) => {
         setFilled(true)
+        setIsLoading(false)
       })
       .catch((error) => {
         setError(error.error[0])
+        setIsLoading(false)
       })
   }
 
   const handleVerifyOtp = (event) => {
     event.preventDefault();
+    if (isLoading) {
+      return;
+    }
+    setIsLoading(true)
     setVerifyErr([])
     dispatch(verifyOtp({ email, otp }))
       .then((data) => {
+        setIsLoading(false)
         const user = {
           email,
           password,
@@ -53,6 +64,7 @@ export default function Register() {
           })
       })
       .catch((error) => {
+        setIsLoading(false)
         setVerifyErr(error.error[0])
       });
   };
@@ -74,17 +86,16 @@ export default function Register() {
   }
 
   const registerData = {
-    error, setName, setEmail, setPassword, setLocation, handleSubmit
+    error, setName, setEmail, setPassword, setLocation, handleSubmit, isLoading
   }
 
   const verifyData = {
-    handleVerifyOtp, handleResendOtp, setOtp, verifyErr
+    handleVerifyOtp, handleResendOtp, setOtp, verifyErr, isLoading
   }
 
   const showPass = {
     icon, type, handleToggle
   }
-
 
   return (
     <div>

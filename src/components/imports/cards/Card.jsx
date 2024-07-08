@@ -9,7 +9,7 @@ export default function Card(props) {
     const nameRef = useRef(null)
     const desRef = useRef(null)
     const [modelView, setmodelView] = useState(false)
-    const username = useSelector((state) => state.cart.email) || "MiyaBhai"
+    const username = useSelector((state) => state.cart.email.email)
     const { img, name, description } = props.cardData
     const dispatch = useDispatch()
     const items = useSelector((state) => state.cart.items)
@@ -31,23 +31,23 @@ export default function Card(props) {
         setmodelView(false)
     }
     const handleAddToCart = (name) => {
-        if(isLoading){
+        if (isLoading) {
             return;
         }
         setIsLoading(true)
         const itemIndex = items.findIndex(
             (item) => item.name === name
         );
-        
+
         if (itemIndex !== -1) {
             const removeItem = dispatch(removeMenuItem(name))
             removeItem
-            .then((data) => {
-                Swal.fire({
-                    title: 'Cart Data Removed Successfully',
-                    icon: 'success',
-                    showConfirmButton: false,
-                    timer: 1200
+                .then((data) => {
+                    Swal.fire({
+                        title: 'Cart Data Removed Successfully',
+                        icon: 'success',
+                        showConfirmButton: false,
+                        timer: 1200
                     })
                 })
                 .catch((error) => {
@@ -66,15 +66,14 @@ export default function Card(props) {
                 }
             ]
         }
-        console.log("username is : ",username)
         const addMenuItems = dispatch(addMenuItem(data))
         addMenuItems
-        .then((data) => {
-            setIsLoading(false)
-            Swal.fire({
-                title: 'Cart Data Added Successfully',
-                icon: 'success',
-                showConfirmButton: false,
+            .then((data) => {
+                setIsLoading(false)
+                Swal.fire({
+                    title: 'Cart Data Added Successfully',
+                    icon: 'success',
+                    showConfirmButton: false,
                     timer: 1200
                 })
             })
@@ -88,7 +87,7 @@ export default function Card(props) {
                 })
             })
     }
-    
+
     return (
         <>
             {modelView ? <Modal2 onClose={handleClose} items={props.cardData} handleAddToCart={handleAddToCart}></Modal2> : ''}
@@ -117,7 +116,7 @@ export default function Card(props) {
                             <span>{finalPrice}</span>
                         </div>
                         <div>
-                            <button style={{ cursor: isLoading ? 'wait' : 'pointer'}} onClick={(event) => { handleAddToCart(name) }} className='btn mt-2' >
+                            <button style={{ cursor: isLoading ? 'wait' : 'pointer' }} onClick={(event) => { handleAddToCart(name) }} className='btn mt-2' >
                                 {isLoading ? 'Loading...' : 'Add To Cart'}
                             </button>
                         </div>

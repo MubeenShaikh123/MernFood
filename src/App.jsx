@@ -34,8 +34,7 @@ function App() {
         return response.json();
       })
       .then(data => {
-        dispatch(setEmail({ email: data.email }))
-        // console.log("data.email : ",data.email);
+        dispatch(setEmail(data.email))
         dispatch(loginSuccess())
         isLoggedIn=true;
         navigate("./")
@@ -45,8 +44,6 @@ function App() {
       });
   }, []);
   isLoggedIn=useSelector(state => state.cart.isLoggedIn)
-  // setIsLoggedin();
-  // console.log(isLoggedIn)
   return (
     <>
       <Routes>

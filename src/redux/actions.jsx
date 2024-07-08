@@ -5,7 +5,7 @@ export const userLogin = (userCredentials) => async (dispatch) => {
   return Authservice.login(userCredentials)
     .then((data) => {
       dispatch(loginSuccess(data))
-      
+      dispatch(setEmail(data.email))
       return Promise.resolve(data)
     })
     .catch((error) => {

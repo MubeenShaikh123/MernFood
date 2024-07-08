@@ -9,7 +9,7 @@ export default function Card(props) {
     const nameRef = useRef(null)
     const desRef = useRef(null)
     const [modelView, setmodelView] = useState(false)
-    const username = useSelector((state) => state.cart.email.email)
+    const username = useSelector((state) => state.cart.email)
     const { img, name, description } = props.cardData
     const dispatch = useDispatch()
     const items = useSelector((state) => state.cart.items)
@@ -40,7 +40,7 @@ export default function Card(props) {
         );
 
         if (itemIndex !== -1) {
-            const removeItem = dispatch(removeMenuItem(name))
+            const removeItem = dispatch(removeMenuItem({name,username}))
             removeItem
                 .then((data) => {
                     Swal.fire({
@@ -51,7 +51,7 @@ export default function Card(props) {
                     })
                 })
                 .catch((error) => {
-                    console.log("Cart Data Removing Failed")
+                    console.log("Cart Data Removing Failed",error)
                 })
         }
 

@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 function Cart() {
   const [isLoading, setIsLoading] = useState(false)
   const items = useSelector((state) => state.cart.items)
-  const username = useSelector((state) => state.cart.email) || "MiyaBhai"
+  const username = useSelector((state) => state.cart.email)
   const dispatch = useDispatch()
   const handleDelete = (name) => {
     if(isLoading){

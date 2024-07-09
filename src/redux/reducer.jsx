@@ -14,14 +14,16 @@ const storeSlice = createSlice({
         }
         ,
         addItemToCart: (state, action) => {
-            const itemToBeRemoved = state.items.findIndex(item => item.name === action.payload.name)
+            const itemToBeRemoved = state.items.findIndex(item => (item.name === action.payload.name) && (item.size === action.payload.size))
             if (itemToBeRemoved !== -1) {
                 state.items.splice(itemToBeRemoved, 1)
             }
             state.items.push(action.payload)
         },
         removeItemFromCart: (state, action) => {
-            const itemToBeRemoved = state.items.findIndex(item => item.name === action.payload)
+            const itemToBeRemoved = state.items.findIndex(item =>{ 
+                return (item.name === action.payload.name) && (item.size === action.payload.size);
+            })
             if (itemToBeRemoved !== -1) {
                 state.items.splice(itemToBeRemoved, 1)
             }

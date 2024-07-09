@@ -28,6 +28,8 @@ export default function Card(props) {
         desRef.current.addEventListener('click', handleOpenCart);
     }, []);
     const handleClose = () => {
+        setQty(1)
+        setSize(priseOption[0])
         setmodelView(false)
     }
 
@@ -64,7 +66,7 @@ export default function Card(props) {
                 });
             });
     };
-    
+
     const handleAddToCart = (name) => {
         if (isLoading) {
             return;
@@ -74,17 +76,14 @@ export default function Card(props) {
         // Check if an item with the same name and size already exists in the cart
         let itemIndex = items.findIndex(
             (item) => {
-                console.log((item.name === name) && (item.size === size));
-                console.log(item.name)
-                console.log(item.size)
                 return (item.name === name) && (item.size === size);
             }
         );
 
-
         if (itemIndex !== -1) {
-            // If item with same name and size exists, remove it
-            const removeItem = dispatch(removeMenuItem({ name, username }));
+            // If item with the same name and size exists, remove it
+            let item = { name, size }
+            const removeItem = dispatch(removeMenuItem({ item, username }));
             removeItem
                 .then((data) => {
                     Swal.fire({
@@ -97,20 +96,19 @@ export default function Card(props) {
                     addNewItem();
                 })
                 .catch((error) => {
-                    console.log("Cart Data Removing Failed", error);
                     setIsLoading(false);
                 });
         } else {
-            // If item with same name and size does not exist, add the new item directly
+            // If item with the same name and size does not exist, add the new item directly
             addNewItem();
         }
-
     };
 
+    let dataformodal = { setQty, priseOption, size, setSize, finalPrice, handleClose, handleAddToCart, img, name, description,isLoading };
 
     return (
         <>
-            {modelView ? <Modal2 onClose={handleClose} items={props.cardData} handleAddToCart={handleAddToCart}></Modal2> : ''}
+            {modelView ? <Modal2 dataformodal={dataformodal}></Modal2> : ''}
             <div className='d-flex justify-content-center '>
                 <div className="card m-3 " style={{ width: "18rem", objectFit: "fill !important" }}>
                     <img ref={imageRef} className="card-img-top w-100 h-100" src={img} alt="Card" id='card_img' />
@@ -136,7 +134,7 @@ export default function Card(props) {
                             <span>{finalPrice}</span>
                         </div>
                         <div>
-                            <button style={{ cursor: isLoading ? 'wait' : 'pointer' }} onClick={(event) => { handleAddToCart(name) }} className='btn mt-2' >
+                            <button style={{ cursor: isLoading ? 'wait' : 'pointer' }} onClick={(event) => { handleAddToCart({ name, size }) }} className='btn mt-2' >
                                 {isLoading ? 'Loading...' : 'Add To Cart'}
                             </button>
                         </div>

@@ -8,14 +8,14 @@ function Cart() {
   const items = useSelector((state) => state.cart.items)
   const username = useSelector((state) => state.cart.email)
   const dispatch = useDispatch()
-  const handleDelete = (name) => {
+  const handleDelete = (item) => {
     if(isLoading){
       return;
     }
     setIsLoading(true)
     const data = {
       username,
-      name
+      item
     }
     const removeItem = dispatch(removeMenuItem(data))
     removeItem
@@ -56,7 +56,7 @@ function Cart() {
             <td>{item.qty}</td>
             <td>{item.size}</td>
             <td>&#8377;{item.finalPrice}</td>
-            <td><button className='closeButton' onClick={() => handleDelete(item.name)}><i className="fa fa-solid fa-trash fa-lg"></i></button></td>
+            <td><button className='closeButton' onClick={() => handleDelete(item)}><i className="fa fa-solid fa-trash fa-lg"></i></button></td>
           </tr>
         ))}
       </div>
@@ -67,7 +67,7 @@ function Cart() {
             <span>{item.qty}</span>
             <span>{item.size}</span>
             <span>&#8377;{item.finalPrice}</span>
-            <button className='closeButton' onClick={() => handleDelete(item.name)}><i className="fa fa-solid fa-trash"></i></button>
+            <button className='closeButton' onClick={() => handleDelete(item)}><i className="fa fa-solid fa-trash"></i></button>
           </div>
         ))}
       </div>

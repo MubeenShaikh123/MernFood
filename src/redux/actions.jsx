@@ -88,7 +88,7 @@ export const addMenuItem = (menuData) => async (dispatch) => {
 export const removeMenuItem = (menuData) => async (dispatch) => {
   return Authservice.removeMenu(menuData)
     .then((data) => {
-      dispatch(removeItemFromCart(menuData.name))
+      dispatch(removeItemFromCart(menuData.item))
       return Promise.resolve(data)
     })
     .catch((error) => {

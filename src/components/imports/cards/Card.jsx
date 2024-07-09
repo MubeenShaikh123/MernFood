@@ -30,31 +30,8 @@ export default function Card(props) {
     const handleClose = () => {
         setmodelView(false)
     }
-    const handleAddToCart = (name) => {
-        if (isLoading) {
-            return;
-        }
-        setIsLoading(true)
-        const itemIndex = items.findIndex(
-            (item) => item.name === name
-        );
 
-        if (itemIndex !== -1) {
-            const removeItem = dispatch(removeMenuItem({name,username}))
-            removeItem
-                .then((data) => {
-                    Swal.fire({
-                        title: 'Cart Data Removed Successfully',
-                        icon: 'success',
-                        showConfirmButton: false,
-                        timer: 1200
-                    })
-                })
-                .catch((error) => {
-                    console.log("Cart Data Removing Failed",error)
-                })
-        }
-
+    const addNewItem = () => {
         const data = {
             username,
             cartData: [
@@ -65,28 +42,71 @@ export default function Card(props) {
                     finalPrice
                 }
             ]
-        }
-        const addMenuItems = dispatch(addMenuItem(data))
+        };
+        const addMenuItems = dispatch(addMenuItem(data));
         addMenuItems
             .then((data) => {
-                setIsLoading(false)
+                setIsLoading(false);
                 Swal.fire({
                     title: 'Cart Data Added Successfully',
                     icon: 'success',
                     showConfirmButton: false,
                     timer: 1200
-                })
+                });
             })
             .catch((error) => {
-                setIsLoading(false)
+                setIsLoading(false);
                 Swal.fire({
                     title: 'Failed To Add Cart Data',
                     icon: 'error',
                     showConfirmButton: false,
                     timer: 1200
+                });
+            });
+    };
+    
+    const handleAddToCart = (name) => {
+        if (isLoading) {
+            return;
+        }
+        setIsLoading(true);
+
+        // Check if an item with the same name and size already exists in the cart
+        let itemIndex = items.findIndex(
+            (item) => {
+                console.log((item.name === name) && (item.size === size));
+                console.log(item.name)
+                console.log(item.size)
+                return (item.name === name) && (item.size === size);
+            }
+        );
+
+
+        if (itemIndex !== -1) {
+            // If item with same name and size exists, remove it
+            const removeItem = dispatch(removeMenuItem({ name, username }));
+            removeItem
+                .then((data) => {
+                    Swal.fire({
+                        title: 'Cart Data Removed Successfully',
+                        icon: 'success',
+                        showConfirmButton: false,
+                        timer: 1200
+                    });
+                    // Add the new item after removing the existing one
+                    addNewItem();
                 })
-            })
-    }
+                .catch((error) => {
+                    console.log("Cart Data Removing Failed", error);
+                    setIsLoading(false);
+                });
+        } else {
+            // If item with same name and size does not exist, add the new item directly
+            addNewItem();
+        }
+
+    };
+
 
     return (
         <>
